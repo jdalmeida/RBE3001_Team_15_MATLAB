@@ -50,9 +50,10 @@ try
 
   % Iterate through a sine wave for joint values
   for k = viaPts
-      tic
+      tic %starts the stopwatch
       %incremtal = (single(k) / sinWaveInc);
-
+        %for reference the character "el" looks like this: "l"
+                                       % one looks like "1"
       packet(1) = k;
 
 
@@ -66,7 +67,7 @@ try
           disp('Received Packet:');
           disp(returnPacket);
       end
-      toc
+      toc %stops the stopwatch
       pause(1) %timeit(returnPacket) !FIXME why is this needed?
       
   end
