@@ -31,7 +31,7 @@ myHIDSimplePacketComs.connect();
 % Create a PacketProcessor object to send data to the nucleo firmware
 pp = PacketProcessor(myHIDSimplePacketComs);
 
-file = 'lab1.csv'
+file = 'a.csv'
 try
   SERV_ID = 36;            % we will be talking to server ID 37 on
                            % the Nucleo
