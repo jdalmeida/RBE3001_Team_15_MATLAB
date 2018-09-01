@@ -12,7 +12,7 @@ import edu.wpi.SimplePacketComs.phy.*;
 import java.util.*;
 import org.hid4java.*;
 version -java;
-myHIDSimplePacketComs=HIDfactory.get();
+myHIDSimplePacketComs=HIDfactory.get();PacketProcessor(myHIDSimplePacketComs);
 myHIDSimplePacketComs.setPid(pid);
 myHIDSimplePacketComs.setVid(vid);
 myHIDSimplePacketComs.connect();
@@ -25,7 +25,7 @@ PROTOCOL_ID = 36;            %receive status message
 CALIBRATION_ID = 35;         %update home position
 
 
-%initial reading to clear out zeros
-packet = zeros(15, 1, 'single');
-returnPacket = pp.command(PROTOCOL_ID , packet);
-pause(.1)
+% initial reading to clear out zeros
+% packet = zeros(15, 1, 'single');
+% returnPacket = pp.command(PROTOCOL_ID , packet);
+% pause(.1)
