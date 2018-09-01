@@ -10,30 +10,12 @@
 % 
 % IMPORTANT - understanding the code below requires being familiar
 % with the Nucleo firmware. Read that code first.
-clear java;
-%clear import;
-clear classes;
-vid = hex2dec('3742');
-pid = hex2dec('0007');
-disp (vid );
-disp (pid);
-javaaddpath ../lib/SimplePacketComsJavaFat-0.5.2.jar;
-import edu.wpi.SimplePacketComs.*;
-import edu.wpi.SimplePacketComs.device.*;
-import edu.wpi.SimplePacketComs.phy.*;
-import java.util.*;
-import org.hid4java.*;
-version -java;
-myHIDSimplePacketComs=HIDfactory.get();
-myHIDSimplePacketComs.setPid(pid);
-myHIDSimplePacketComs.setVid(vid);
-myHIDSimplePacketComs.connect();
+init;
 % Create a PacketProcessor object to send data to the nucleo firmware
 pp = PacketProcessor(myHIDSimplePacketComs);
 
-file = 'a.csv'
 try
-  SERV_ID = 36;            % we will be talking to server ID 37 on
+  SERV_ID = 37;            % we will be talking to server ID 37 on
                            % the Nucleo
 
   DEBUG   = true;          % enables/disables debug prints
@@ -46,33 +28,29 @@ try
   % The following code generates a sinusoidal trajectory to be
   % executed on joint 1 of the arm and iteratively sends the list of
   % setpoints to the Nucleo firmware. 
-  viaPts = [0, -400, 400, -400, 400];
+  viaPts = [0, -400, 400, -400, 400, 0];
 
   
-  fclose(fopen(file, 'w'));
-  returnPacket = pp.command(SERV_ID, packet);
+
   % Iterate through a sine wave for joint values
-  for i = 1:5
-      tic %starts the stopwatch
+  for k = viaPts
+      tic
       %incremtal = (single(k) / sinWaveInc);
-        %for reference the character "el" looks like this: "l"
-                                       % one looks like "1"
-%       packet(1) = k;
+
+      packet(1) = k;
 
 
       % Send packet to the server and get the response
       returnPacket = pp.command(SERV_ID, packet);
-      
       
 
       if DEBUG
           disp('Sent Packet:');
           disp(packet);
           disp('Received Packet:');
-          disp(returnPacket');
-%           dlmwrite(file,returnPacket','-append');
+          disp(returnPacket);
       end
-      toc %stops the stopwatch
+      toc
       pause(1) %timeit(returnPacket) !FIXME why is this needed?
       
   end
