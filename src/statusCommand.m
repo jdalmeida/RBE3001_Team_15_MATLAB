@@ -29,59 +29,34 @@ myHIDSimplePacketComs.setPid(pid);
 myHIDSimplePacketComs.setVid(vid);
 myHIDSimplePacketComs.connect();
 % Create a PacketProcessor object to send data to the nucleo firmware
+
 pp = PacketProcessor(myHIDSimplePacketComs);
 
-file = 'a.csv'
 try
   SERV_ID = 36;            % we will be talking to server ID 37 on
                            % the Nucleo
 
   DEBUG   = true;          % enables/disables debug prints
-
-  % Instantiate a packet - the following instruction allocates 64
-  % bytes for this purpose. Recall that the HID interface supports
-  % packet sizes up to 64 bytes.
-  packet = zeros(15, 1, 'single');
-
-  % The following code generates a sinusoidal trajectory to be
-  % executed on joint 1 of the arm and iteratively sends the list of
-  % setpoints to the Nucleo firmware. 
-  viaPts = [0, -400, 400, -400, 400];
-
-  
-  fclose(fopen(file, 'w'));
-  returnPacket = pp.command(SERV_ID, packet);
-  % Iterate through a sine wave for joint values
-  for i = 1:5
-      tic %starts the stopwatch
-      %incremtal = (single(k) / sinWaveInc);
-        %for reference the character "el" looks like this: "l"
-                                       % one looks like "1"
-%       packet(1) = k;
-
+    
+  while(1)
+      % Instantiate a packet - the following instruction allocates 64
+      % bytes for this purpose. Recall that the HID interface supports
+      % packet sizes up to 64 bytes.
+      packet = zeros(15, 1, 'single');
 
       % Send packet to the server and get the response
       returnPacket = pp.command(SERV_ID, packet);
+      r = returnPacket';
       
+      disp('Received Packet:');
+      disp(r([1, 4, 7]));
       
-
-      if DEBUG
-          disp('Sent Packet:');
-          disp(packet);
-          disp('Received Packet:');
-          disp(returnPacket');
-%           dlmwrite(file,returnPacket','-append');
-      end
-      toc %stops the stopwatch
-      pause(1) %timeit(returnPacket) !FIXME why is this needed?
-      
+      pause(.5);
   end
+
 catch exception
-    getReport(exception)
+    getReport(exception);
     disp('Exited on error, clean shutdown');
 end
 % Clear up memory upon termination
-pp.shutdown()
-
-
-toc
+pp.shutdown();
