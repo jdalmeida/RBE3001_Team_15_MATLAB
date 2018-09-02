@@ -1,34 +1,55 @@
-TIC_TO_ANGLE = 1;
 
+clc;
 init;
+TIC_TO_ANGLE = 360.0/4096.0;
 
-% plot stuff
-plotTitle = 'Joint Angle';  % plot title
-xLabel = 'Elapsed Time (s)';     % x-axis label
-yLabel = 'Angle (deg)';      % y-axis label
-legend1 = 'Joint 1'
-legend2 = 'Joint 2'
-legend3 = 'Joint 3'
-title(plotTitle,'FontSize',15);
-xlabel(xLabel,'FontSize',15);
-ylabel(yLabel,'FontSize',15);
-legend(legend1,legend2,legend3)
+packet = zeros(15, 1, 'single');
+pp = PacketProcessor(myHIDSimplePacketComs);
+returnPacket = pp.command(PROTOCOL_ID , packet);
 
-%initialize plot
-time = 0;
-ax = axes();
-hold on;
-line1 = line(time, pos(1));  %handle for line 1
-line2 = line(time, pos(2));  %handle for line 2
-line3 = line(time, pos(3));
-axis([0 inf 0 360]) %Chose those y-axis values because in normal conditions, temp is aprox 22ºC
+%% Plot Settings
+% Create figure
+figure1 = figure('Name','Joint Angle Live Plot');
 
+% Create axes
+axes1 = axes('Parent',figure1);
+hold(axes1,'on');
+
+% Create line
+line1 = line(0,0,'Parent',axes1,'DisplayName','Joint 1','Color',[1 0 0]);
+
+% Create line
+line2 = line(0,0,'Parent',axes1,'DisplayName','Joint 2','Color',[0 0 1]);
+
+% Create line
+line3 = line(0,0,'Parent',axes1,'DisplayName','Joint 3','Color',[0 1 0]);
+
+% Create xlabel
+xlabel('Time (s)');
+
+% Create ylabel
+ylabel('Angle (deg)');
+
+% Create legend
+legend(axes1,'show');
+
+% line1 = line(time, 0,'Color', 'r');  %handle for joint 1
+% line2 = line(time, 0,'Color', 'b');  %handle for joint 2
+% line3 = line(time, 0,'Color', 'g');  %handle for joint 3
+axis([0 inf -180 180]); 
+
+%% Live Plot
 tic;
-while 1
+time = 0;
+
+% while 1   % for actual live graphing
+for i=1:100
     %run to get packet data
-    statusCommand;
+    % Send packet to the server and get the response
+    returnPacket = pp.command(PROTOCOL_ID , packet);
+    pause(.1);
     transpose = returnPacket';
-    pos = transpose([1,4,7]);
+    pos = TIC_TO_ANGLE * transpose([1,4,7]);
     pos(4) = toc;
     time = pos(4);
     
@@ -38,8 +59,8 @@ while 1
     line2.YData = [line2.YData pos(2)];
     line3.XData = [line3.XData time];
     line3.YData = [line3.YData pos(3)];
-    
 end
+pp.shutdown();
 
 
 

@@ -12,7 +12,7 @@ try
   % packet sizes up to 64 bytes.
   packet = zeros(15, 1, 'single');
    returnPacket = pp.command(PROTOCOL_ID , packet);
-for i=0:100
+for i=0:50
   % Send packet to the server and get the response
   returnPacket = pp.command(PROTOCOL_ID , packet);
   disp('Received Packet:');
