@@ -5,6 +5,8 @@ try
    pp = PacketProcessor(myHIDSimplePacketComs);
   total=zeros(1,3,'single'); %empty vector to hold running total of calibrations
   firstpacket=zeros(15,1,'single');
+  returnPacket = pp.command(CALIBRATION_ID, firstpacket);
+  pause(.1);
   count = 10;
   disp("getting averages: ");
   for i = 1:count
@@ -12,8 +14,9 @@ try
       returnPacket = pp.command(CALIBRATION_ID, firstpacket);
       transposed = returnPacket';
       position = transposed([1,4,7]);
-      disp(transposed);  
+      disp(position);  
       total = total + position;
+      pause(.1);
   end
   avg = (1.0/count) * total;
   
@@ -25,7 +28,7 @@ try
   firstpacket(3) = avg(3);
   pp.command(CALIBRATION_ID, firstpacket);
   disp(firstpacket);  
-  
+
 
 % Clear up memory upon termination
 
@@ -33,8 +36,8 @@ try
 %NOTE: there is something where if you reset the array just before
     %getting a packet it can cause issues
  firstpacket=zeros(15,1,'single');
- pause(.1);
-for i=0:1000
+ pause(1);
+for i=0:10
     %send zeros to get just the encoder values
     returnPacket = pp.command(CALIBRATION_ID, firstpacket);
     finalvals=returnPacket';
