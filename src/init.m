@@ -17,7 +17,7 @@ myHIDSimplePacketComs.setPid(pid);
 myHIDSimplePacketComs.setVid(vid);
 myHIDSimplePacketComs.connect();
 
-pp = PacketProcessor(myHIDSimplePacketComs);
+%pp = PacketProcessor(myHIDSimplePacketComs);
 
 %Server ID Library
 PID_ID = 37;                 %give robot a set point
@@ -26,6 +26,6 @@ CALIBRATION_ID = 35;         %update home position
 
 
 % initial reading to clear out zeros
-% packet = zeros(15, 1, 'single');
-% returnPacket = pp.command(PROTOCOL_ID , packet);
-% pause(.1)
+%packet = zeros(15, 1, 'single');
+%returnPacket = pp.command(CALIBRATION_ID , packet);
+%pause(.1)
