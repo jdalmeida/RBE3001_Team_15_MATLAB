@@ -6,7 +6,7 @@ function Setpoint(pp, joint1, joint2, joint3)
     PID_ID = 37;
     
     tic;
-    setpoint_csv = 'blank.csv';
+    setpoint_csv = '15_pos4.csv';
     if(exist(setpoint_csv, 'file') == 2)
       delete(setpoint_csv);
     end
@@ -19,13 +19,12 @@ function Setpoint(pp, joint1, joint2, joint3)
 
        pp.command(PID_ID, packet); %send packet
 
-       for i=1:100
+       for i=1:150
            pos = getStatus(pp);
            pos = TIC_TO_ANGLE * pos;
            pos(4) = toc;
            dlmwrite(setpoint_csv,pos,'-append');
-           disp(pos);
-%            pause(.01);
+%            disp(pos);
        end
     catch exception
         getReport(exception)

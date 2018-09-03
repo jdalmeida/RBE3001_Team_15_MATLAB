@@ -21,3 +21,4 @@ catch exception
 end
 % Clear up memory upon termination
 pp.shutdown();
+clear
