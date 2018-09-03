@@ -10,7 +10,24 @@
 % 
 % IMPORTANT - understanding the code below requires being familiar
 % with the Nucleo firmware. Read that code first.
-init;
+clear java;
+%clear import;
+clear classes;
+vid = hex2dec('3742');
+pid = hex2dec('0007');
+disp (vid );
+disp (pid);
+javaaddpath ../lib/SimplePacketComsJavaFat-0.6.3.jar;
+import edu.wpi.SimplePacketComs.*;
+import edu.wpi.SimplePacketComs.device.*;
+import edu.wpi.SimplePacketComs.phy.*;
+import java.util.*;
+import org.hid4java.*;
+version -java;
+myHIDSimplePacketComs=HIDfactory.get();
+myHIDSimplePacketComs.setPid(pid);
+myHIDSimplePacketComs.setVid(vid);
+myHIDSimplePacketComs.connect();
 % Create a PacketProcessor object to send data to the nucleo firmware
 pp = PacketProcessor(myHIDSimplePacketComs);
 
@@ -43,7 +60,7 @@ try
       % Send packet to the server and get the response
       returnPacket = pp.command(SERV_ID, packet);
       
-
+      
       if DEBUG
           disp('Sent Packet:');
           disp(packet);
