@@ -1,3 +1,4 @@
+clear
 clear java;
 %clear import;
 clear classes;
@@ -5,7 +6,7 @@ vid = hex2dec('3742');
 pid = hex2dec('0007');
 disp (vid );
 disp (pid);
-javaaddpath ../lib/SimplePacketComsJavaFat-0.5.2.jar;
+javaaddpath ../lib/SimplePacketComsJavaFat-0.6.2.jar;
 import edu.wpi.SimplePacketComs.*;
 import edu.wpi.SimplePacketComs.device.*;
 import edu.wpi.SimplePacketComs.phy.*;
@@ -17,16 +18,11 @@ myHIDSimplePacketComs.setPid(pid);
 myHIDSimplePacketComs.setVid(vid);
 myHIDSimplePacketComs.connect();
 
-%pp = PacketProcessor(myHIDSimplePacketComs);
+% Constants
 TIC_TO_ANGLE = 360.0/4096.0;
+ANGLE_TO_TIC = 4096.0/360.0;
 
-%Server ID Library
+% Server ID Library
 PID_ID = 37;                 %give robot a set point
 PROTOCOL_ID = 36;            %receive status message
 CALIBRATION_ID = 35;         %update home position
-
-
-% initial reading to clear out zeros
-%packet = zeros(15, 1, 'single');
-%returnPacket = pp.command(CALIBRATION_ID , packet);
-%pause(.1)
