@@ -1,12 +1,9 @@
-
-
 clc;
 init;
-TIC_TO_ANGLE = 360.0/4096.0;
 
 packet = zeros(15, 1, 'single');
 pp = PacketProcessor(myHIDSimplePacketComs);
-returnPacket = pp.command(PROTOCOL_ID , packet
+returnPacket = pp.command(PROTOCOL_ID , packet)
 %% Plot Settings
 % Create figure
 figure1 = figure('Name','Joint Angle Live Plot');

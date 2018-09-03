@@ -18,7 +18,7 @@ myHIDSimplePacketComs.setVid(vid);
 myHIDSimplePacketComs.connect();
 
 %pp = PacketProcessor(myHIDSimplePacketComs);
-TIC_TO_ANGLE = 1;
+TIC_TO_ANGLE = 360.0/4096.0;
 
 %Server ID Library
 PID_ID = 37;                 %give robot a set point
