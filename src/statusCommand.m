@@ -14,7 +14,9 @@ try
   pause(.1);
     returnPacket = pp.command(PROTOCOL_ID , packet);
   disp('Received Packet:');
-  disp(returnPacket');
+  t = returnPacket';
+  r = TIC_TO_ANGLE * t;
+  disp(r([1,4,7]));
   
 catch exception
     getReport(exception);

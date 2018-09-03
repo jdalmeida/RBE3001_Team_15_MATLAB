@@ -1,5 +1,3 @@
-TIC_TO_ANGLE = 1;
-
 init;
 
 % plot stuff
