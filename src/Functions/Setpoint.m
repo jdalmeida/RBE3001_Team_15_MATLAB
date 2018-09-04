@@ -1,9 +1,7 @@
 %% This function should be called with angle measurements for each of
     %The joints, it will then move the joints as such
 function Setpoint(pp, joint1, joint2, joint3)
-    TIC_TO_ANGLE = 360.0/4096.0;
-    ANGLE_TO_TIC = 4096.0/360.0;
-    PID_ID = 37;
+    constants;
     
     tic;
     setpoint_csv = 'null.csv';

@@ -1,6 +1,5 @@
 function [pos, vel, force] = getStatus(pp)
-    PROTOCOL_ID = 36;
-
+    constants;    
     packet = zeros(15, 1, 'single');
 
     returnPacket = pp.command(PROTOCOL_ID, packet);

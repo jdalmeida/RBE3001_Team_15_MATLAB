@@ -1,6 +1,7 @@
 init;
+constants;
 % Create a PacketProcessor object to send data to the nucleo firmware
-pos_csv='posn.csv';
+pos_csv='null.csv';
 try
   if(exist(pos_csv, 'file') == 2)
       delete(pos_csv);

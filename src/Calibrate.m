@@ -1,5 +1,5 @@
 init;
-
+constants;
 try
   %% This is the averaging portion of the calibration  
    pp = PacketProcessor(myHIDSimplePacketComs);

@@ -10,3 +10,5 @@ Style Guide:
 -any development branches have dev_LabX
 
 run clear before and after any script wo/semicolon
+
+If you're have an error saying a file can't be run (eg constants) right click the file and say add to path.
