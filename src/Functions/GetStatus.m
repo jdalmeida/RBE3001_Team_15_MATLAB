@@ -1,4 +1,5 @@
-function [pos, vel, force] = getStatus(pp)
+%% Calls the protocol server on the nucleo and returns 3 matricies with the values
+function [pos, vel, force] = GetStatus(pp)
     constants;    
     packet = zeros(15, 1, 'single');
 

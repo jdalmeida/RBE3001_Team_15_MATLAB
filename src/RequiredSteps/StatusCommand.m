@@ -1,6 +1,7 @@
 init;
 % Create a PacketProcessor object to send data to the nucleo firmware
 
+%% sends 0s to the neucleo and recieves the position, velocity and accleration data from the joints
 try
   DEBUG   = true;          % enables/disables debug prints
   pp = PacketProcessor(myHIDSimplePacketComs);

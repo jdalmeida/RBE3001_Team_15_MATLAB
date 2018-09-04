@@ -1,6 +1,11 @@
-
 init;
 
+%% This sets up the pid values for each of the arms
+
+%the following values work well:
+% jToSet1=[.0025 0 0];
+% jToSet2=[.0025 0 .028];
+% jToSet3=[.0025 0 .02];
 
 pp = PacketProcessor(myHIDSimplePacketComs);
 zeroMat = zeros(3,1, 'single');

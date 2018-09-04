@@ -42,7 +42,7 @@ axis([0 inf -180 180]);
 %% Live Plot
 tic;
 
-% while 1   % for actual live graphing
+%% runs the graph for ten seconds and plots the data into the lines sepcified above
 for i= 1:100
     %run to get packet data
     % Send packet to the server and get the response
