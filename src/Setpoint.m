@@ -6,7 +6,7 @@ function Setpoint(pp, joint1, joint2, joint3)
     PID_ID = 37;
     
     tic;
-    setpoint_csv = '15_pos4.csv';
+    setpoint_csv = 'null.csv';
     if(exist(setpoint_csv, 'file') == 2)
       delete(setpoint_csv);
     end

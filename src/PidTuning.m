@@ -14,7 +14,7 @@ jToSet3=zeros(3,1,'single');
 jToSet3=[.0025 0 .02];
 PIDConfig(pp, jToSet1, jToSet2, jToSet3);
 
-Setpoint(pp,-76.8164,36.0132,-9.2285);
-
+%Setpoint(pp,-76.8164,36.0132,-9.2285);
+Setpoint(pp,-20,30.0132,5);
 pp.shutdown();
 clear
