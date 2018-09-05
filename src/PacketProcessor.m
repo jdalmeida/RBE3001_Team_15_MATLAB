@@ -7,7 +7,7 @@ classdef PacketProcessor
     end
     methods
 	%The is a shutdown function to clear the HID hardware connection
-        function  shutdown(packet)
+        function shutdown(packet)
 	    %Close the device
             packet.myHIDSimplePacketComs.disconnect();
         end

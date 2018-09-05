@@ -1,0 +1,14 @@
+Style Guide:
+-Camel case for variables
+-Classes have capital first letter
+-Script names are capital first camel case
+-Funtions: Capital first letter for functions
+-separate disparate blocks with header comments describing
+    functionality (and issues)
+-personal branches have initials_branchName
+-camel case for branch names
+-any development branches have dev_LabX
+
+run clear before and after any script wo/semicolon
+
+If you're have an error saying a file can't be run (eg constants) right click the file and say add to path.
