@@ -1,13 +1,19 @@
 init;
 try
   %% This is the averaging portion of the calibration  
-   pp = PacketProcessor(myHIDSimplePacketComs);
+  pp = PacketProcessor(myHIDSimplePacketComs);
   total=zeros(1,3,'single'); %empty vector to hold running total of calibrations
   firstpacket=zeros(15,1,'single');
   returnPacket = pp.command(CALIBRATION_ID, firstpacket);
   pause(.1);
   count = 10;
   disp("getting averages: ");
+  
+  calb_csv='calibrate11.csv';
+  if(exist(calb_csv, 'file') == 2)
+      delete(calb_csv);
+  end
+  tic
   for i = 1:count
       % Send packet to the server and get the response
       returnPacket = pp.command(CALIBRATION_ID, firstpacket);
@@ -15,6 +21,8 @@ try
       position = transposed([1,4,7]);
       disp(position);  
       total = total + position;
+      time = toc;
+      dlmwrite(calb_csv,[position time],'-append');
       pause(.1);
   end
   avg = (1.0/count) * total;
@@ -42,6 +50,8 @@ for i=0:10
     finalvals=returnPacket';
     dispvals=finalvals([1,4,7]);
     disp(dispvals);
+    time = toc;
+    dlmwrite(calb_csv,[dispvals time],'-append');
     pause(.1);
 end
 pp.shutdown();
