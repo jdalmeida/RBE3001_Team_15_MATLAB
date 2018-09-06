@@ -1,6 +1,6 @@
 %% Sets the pid values for each of the joints to the "arrays" passed in
 function PIDConfig(pp, j1pid, j2pid, j3pid)
-     PIDCONFIG_ID = 65;
+     constants;
      
      %% sets joint1, joint2 and joint3 pid respectively to j1, j2 and j3
      try

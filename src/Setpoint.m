@@ -24,7 +24,7 @@ function Setpoint(pp, joint1, joint2, joint3)
            pos = TIC_TO_ANGLE * pos;
            pos(4) = toc;
            dlmwrite(setpoint_csv,pos,'-append');
-           disp(pos);
+%            disp(pos);
        end
     catch exception
         getReport(exception)
