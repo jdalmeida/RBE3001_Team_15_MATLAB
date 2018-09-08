@@ -43,7 +43,7 @@ axis([0 inf -180 180]);
 tic;
 
 %% runs the graph for ten seconds and plots the data into the lines sepcified above
-for i= 1:100
+while 1
     %run to get packet data
     % Send packet to the server and get the response
     returnPacket = pp.command(PROTOCOL_ID , packet);

@@ -1,5 +1,3 @@
-
-
 clear
 clear java;
 %clear import;
