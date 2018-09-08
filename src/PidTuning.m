@@ -13,7 +13,7 @@ jToSet2=zeros(3,1,'single');
 jToSet2=[.0028 0 .028];
 jToSet3=zeros(3,1,'single');
 jToSet3=[.0025 0 .02];
-PIDConfig(pp, jToSet1, jToSet2, jToSet3);
+% PIDConfig(pp, jToSet1, jToSet2, jToSet3);
 
 %% Moves the robot to the setpoint (in degrees) for each of the joints.
 Setpoint(pp,10,40,20);
