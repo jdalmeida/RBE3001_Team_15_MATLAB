@@ -1,4 +1,4 @@
-function LivePlot3D(q, start)
+function LivePlot3D(q, start, R)
 %% Initialize the figure
      if (start)
         figure1 = figure;
@@ -29,10 +29,10 @@ function LivePlot3D(q, start)
             'Marker','diamond',...
             'LineWidth',2,...
             'Color',[0.635294139385223 0.0784313753247261 0.184313729405403]);
-            disp('Plotting');
+        
      else 
 %% Create Plot
-        q0 = q(1); q1 = q(2); q2 = q(3);
+        q0 = -q(1); q1 = -q(2); q2 = -q(3) + 90;
         L1 = 135; L2 = 175; L3 = 169.28; 
 
         T01 = DHSolver(0, -90, L1, q0);
