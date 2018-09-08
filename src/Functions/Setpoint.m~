@@ -2,6 +2,7 @@
 %The joints, it will then move the joints as such
 function Setpoint(pp, joint1, joint2, joint3)
 constants;
+
 tic;
 setpoint_csv = 'null.csv';
 if(exist(setpoint_csv, 'file') == 2)

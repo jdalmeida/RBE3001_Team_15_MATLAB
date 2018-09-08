@@ -1,4 +1,5 @@
 clear
+close all;
 clear java
 %clear import;
 clear classes;
