@@ -12,11 +12,11 @@ PID1=[.0025 0 0];
 PID2=[.0025 0 .028];
 PID3=[.0025 0 .02];
 PIDConfig(pp, PID1, PID2, PID3);
-pause(.1);
+pause(1);
 
 Setpoint(pp, 25.2,   78.7,  -32.5);
 
-pause(2)
+pause(2);
 % Setpoint(pp, 0, 0, 0);
 
 

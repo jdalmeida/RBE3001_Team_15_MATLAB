@@ -12,7 +12,7 @@ import edu.wpi.SimplePacketComs.device.*;
 import edu.wpi.SimplePacketComs.phy.*;
 import java.util.*;
 import org.hid4java.*;
-version -java
+version -java;
 myHIDSimplePacketComs=HIDfactory.get();
 myHIDSimplePacketComs.setPid(pid);
 myHIDSimplePacketComs.setVid(vid);

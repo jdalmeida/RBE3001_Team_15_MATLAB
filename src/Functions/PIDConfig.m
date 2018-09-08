@@ -8,7 +8,7 @@ function PIDConfig(pp, j1pid, j2pid, j3pid)
          packet(1:3) = j1pid;
          packet(4:6) = j2pid;
          packet(7:9) = j3pid;
-         pp.command(PIDCONFIG_ID, packet);
+         retPack=pp.command(PIDCONFIG_ID, packet);
     catch exception
         getReport(exception);
         disp('Exited on error, clean shutdown');
