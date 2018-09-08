@@ -4,7 +4,7 @@ function Setpoint(pp, joint1, joint2, joint3)
     constants;
     
     tic;
-    setpoint_csv = 'null.csv';
+    setpoint_csv = 'stepResponse_5.csv';
     if(exist(setpoint_csv, 'file') == 2)
       delete(setpoint_csv);
     end
@@ -14,20 +14,26 @@ function Setpoint(pp, joint1, joint2, joint3)
        packet(1) = ANGLE_TO_TIC * joint1;
        packet(4) = ANGLE_TO_TIC * joint2;
        packet(7) = ANGLE_TO_TIC * joint3;
-
-       pp.command(PID_ID, packet); %send packet
-
+%       pp.write(PID_ID, packet);
+%       pause(0.003);
+%       returnPacket=pp.read(PID_ID);
+        returnPacket = pp.command(PID_ID,packet);
        for i=1:150
-           pos = GetStatus(pp);
+           [pos ,~ ,~] = GetStatus(pp);
            pos = TIC_TO_ANGLE * pos;
            pos(4) = toc;
            dlmwrite(setpoint_csv,pos,'-append');
-%            disp(pos);
+%          disp(pos);
+           pause(.1);
        end
     catch exception
         getReport(exception)
         disp('Exited on error, clean shutdown');
     end
+    
+    time = toc;
+    setpoint = [joint1, joint2, joint3, time];
+    dlmwrite(setpoint_csv,setpoint,'-append');
 end
 
 

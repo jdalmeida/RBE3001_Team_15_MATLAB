@@ -14,9 +14,9 @@ function LivePlot3D(q, start, R)
         % Create ylabel
         ylabel('Y');
 
-        xlim(axes1,[0 400]);
-        ylim(axes1,[-200 200]);
-        zlim(axes1,[0 400]);
+        xlim(axes1,[-100 400]);
+        ylim(axes1,[-250 250]);
+        zlim(axes1,[-100 400]);
         view(axes1,[-156.7 8.40000000000001]);
         box(axes1,'on');
         grid(axes1,'on');

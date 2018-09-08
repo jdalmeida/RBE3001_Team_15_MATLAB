@@ -9,10 +9,10 @@ try
   count = 10;
   disp("getting averages: ");
   
-  calb_csv='calibrate11.csv';
-  if(exist(calb_csv, 'file') == 2)
-      delete(calb_csv);
-  end
+%   calb_csv='null.csv';
+%   if(exist(calb_csv, 'file') == 2)
+%       delete(calb_csv);
+%   end
   tic
   for i = 1:count
       % Send packet to the server and get the response
@@ -22,7 +22,7 @@ try
       disp(position);  
       total = total + position;
       time = toc;
-      dlmwrite(calb_csv,[position time],'-append');
+%       dlmwrite(calb_csv,[position time],'-append');
       pause(.1);
   end
   avg = (1.0/count) * total;
@@ -51,7 +51,7 @@ for i=0:10
     dispvals=finalvals([1,4,7]);
     disp(dispvals);
     time = toc;
-    dlmwrite(calb_csv,[dispvals time],'-append');
+%     dlmwrite(calb_csv,[dispvals time],'-append');
     pause(.1);
 end
 pp.shutdown();

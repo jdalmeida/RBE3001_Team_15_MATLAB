@@ -12,7 +12,7 @@ while 1
     [pos, v, f]= GetStatus(pp);
     pos = TIC_TO_ANGLE * pos;
     LivePlot3D(pos, false, R);
-    pause(.1);
+    pause(.01);
 end
 
 pp.shutdown();
