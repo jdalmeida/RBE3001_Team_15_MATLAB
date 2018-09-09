@@ -1,4 +1,4 @@
-function LivePlot3D(q, start, R)
+function LivePlot3D(q, start)
 %% Initialize the figure
 
 if (start)
@@ -46,6 +46,8 @@ elseif (~start)
     p23 = T03(1:3,4);
     
     framePos = [z p01 p12 p23];
+    handleGetter=GraphSingleton();
+    R=handleGetter.getHandle();
     set(R.handle, 'xdata', framePos(1,:), 'ydata', framePos(2,:), 'zdata', framePos(3,:));
     %rInitialized=1;
     %     hold off;

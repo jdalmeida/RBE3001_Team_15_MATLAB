@@ -20,7 +20,7 @@ try
     for i=1:150
         [pos, ~, ~]= GetStatus(pp);
         pos = TIC_TO_ANGLE * pos;   
-        LivePlot3D(pos, false, R);
+        LivePlot3D(pos, false);
         
         pos(4) = toc;
         dlmwrite(setpoint_csv,pos,'-append');
