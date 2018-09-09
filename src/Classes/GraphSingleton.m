@@ -1,31 +1,24 @@
-
-% classdef StoreData
-%    methods (Static)
-%       function out = setgetVar(data)
-%          persistent Var;
-%          if nargin
-%             Var = data;
-%          end
-%          out = Var;
-%       end
-%    end
-% end
-%    if isempty(logTime)
-%         logTime = currTime;
-%         disp('Logging initial value.')
-%         dlmwrite(fname,n)
-%         return
-%     end
+%% This class is used to store a static reference to the plot
 classdef GraphSingleton
+    %Properties is empty because the static in matlab is called
+    %persistent and can only be done in a function
     properties
     end
     methods
+        %This is the constructor so any script can get an instance of the
+        %class. This instance will be unique
         function obj = GraphSingleton()
         end
     end
+    %Static means this is the same function across every instance of the
+    %class 
     methods (Static)
         function out = getHandle()
+            %This is the actual data that needs to persistent across every
+            %instance of the class
             persistent R;
+            %When its empty populate it once and only once then return a
+            %reference to it
             if isempty(R)
                 framePos = zeros(4,4,'single');        
                 R.handle = plot3(framePos(1,:), framePos(2,:), framePos(3,:),'MarkerFaceColor',[0 0 0],'MarkerEdgeColor',[0 0 0],...
@@ -35,6 +28,15 @@ classdef GraphSingleton
                 out=R;
             else
                 out=R;
+            end
+        end
+        function out = getGraphText()
+            persistent posText;
+            if isempty(posText)
+               posText = text(0,0,0,'');
+               out = posText;
+            else
+                out= posText;
             end
         end
     end

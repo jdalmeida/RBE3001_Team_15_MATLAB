@@ -21,8 +21,11 @@ if start
     box(axes1,'on');
     grid(axes1,'on');
     
+    label = '';
+
     set(axes1,'Color',[0.941176474094391 0.941176474094391 0.941176474094391]);
     disp("Initializing Plot")
+    t = text(0,0,0,label)
     
 elseif ~start
     %% Create Plot
@@ -42,15 +45,12 @@ elseif ~start
     
     framePos = [z p01 p12 p23];
     
-    q = double(q);
-    lastPoint = double(p23);
     
-    label = sprintf('Joint 1: %0.0f \nJoint 2: %0.0f \nJoint 3: %0.0f', q(1), q(2), q(3));
+    label = sprintf('Joint 1: %d, Joint 2: %d, Joint 3: %d', q(1), q(2), q(3)); 
+    t = text(p23(1)+0.0, p23(2)+0.0, p23(3)+0.0, label);
     
     handleGetter=GraphSingleton();
     R=handleGetter.getHandle();
-    t = handleGetter.getGraphText();
-    set(t,'Position', lastPoint, 'String', label);
     set(R.handle, 'xdata', framePos(1,:), 'ydata', framePos(2,:), 'zdata', framePos(3,:));
     drawnow();
     
