@@ -8,10 +8,10 @@ returnPacket = pp.command(PROTOCOL_ID , packet);
 
 %% Plot Settings
 % Create figure
-figure1 = figure('Name','Joint Angle Live Plot');
+%figure1 = figure('Name','Joint Angle Live Plot');
 
 % Create axes
-axes1 = axes('Parent',figure1);
+axes1 = axes('Parent',figure);
 hold(axes1,'on');
 
 % Create line

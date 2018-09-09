@@ -3,8 +3,8 @@ function LivePlot3D(q, start, R)
 
 if (start)
     constants;
-    figure1 = figure;
-    axes1 = axes('Parent',figure1);
+   % figure1 = figure;
+    axes1 = axes('Parent',figure);
     hold(axes1,'on');
     
     % Create xlabel
