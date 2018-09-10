@@ -9,15 +9,9 @@ PIDConfig(pp, PID1, PID2, PID3);
 
 LivePlot3D([0,0,0], true);
 pause(.5);
-tic;
+% tic;
 
 %% Setpoints for part 6
-% pointsPart6 = [24.4, 14.8, 12.9;...
-%     -0.2,82.2,-20.1;...
-%     -29.2, 14.2, 8.8;...
-%     32.9, 50.3, -3.3;...
-%     -31.2, 54, -.6];
-
 % Setpoint(pp, 24.4, 14.8, 12.9);
 % Setpoint(pp, -0.2,82.2,-20.1);
 % Setpoint(pp, -29.2, 14.2, 8.8);
@@ -31,28 +25,33 @@ tic;
 % Setpoint(pp, 0, -1.2, 29.5);
 % Setpoint(pp, 0, 2.2, -3.5);
 
+
+
+%% Trajectory planning with part 9
+
 % Matrix of all the the setpoint joint angles (j1, j2, j3)
 trianglePts = [0, 0, 0;...
-    0, 71.7, -20.7;...
-    0, -1.2, 29.5;...
-    0, 2.2, -3.5];
+               0, 71.7, -20.7;...
+               0, -1.2, 29.5;...
+               0, 2.2, -3.5];
 
-%% Go to the points
 [rows, ~] = size(trianglePts);
 v0 = 0;
 vf = 0;
+toffset = 2;    %difference between t0 and tf
+
+angles = zeros(1,3, 'single'); % to hold end positions 
 
 tic;
 
 % iterate through each setpoint in triangles
 for i = 2:rows
     
-    toffset = 1;
-    now = toc;  % Current timestamp
     coeffiecients = zeros(3, 4, 'single'); % joints -> rows; ai -> cols
-    angles = zeros(1,3, 'single'); % to hold end positions
     
-    % iterate through each joints for each setpoints
+    now = toc;  % Current timestamp
+    
+    % iterateisplays the time elapsed since the tic command  through each joints for each setpoints
     % to get the coeffiecents for the trajectory
     for j = 1:3
         q0 = trianglePts(i-1, j);
@@ -60,26 +59,25 @@ for i = 2:rows
         coeffiecients(j, :) = TrajectoryGen(now, now + toffset, q0, qf, v0, vf);
     end
     
-    startTime = now;
+    startTime = now; % to keep track of when the trajectory is starting
     
     % loop for each trajectory 
-    while now < startTime + toffset
-        now = toc;       % reset current time each loop iteration
-        
+    while now < (startTime + toffset)
+        now = toc;       % update current time each loop iteration
+        disp(now);
         % generate the positions for the 
         for j = 1:3
             angles(j) = trajectoryPosition(coeffiecients(j,:), now);
         end
         
+        % Go to the setpoint based on the equation
+        Setpoint(pp, angles(1), angles(2), angles(3));
         
+        UpdateStickModel;
     end
     
 end
 
-% loop
-% q(toc)
-% setpoint (q1(toc))
-%     while (toc - lastToc < .1)
     
 % Clear up memory upon termination
 pp.shutdown();
