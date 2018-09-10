@@ -1,4 +1,5 @@
-triangle = csvread('triangle_step7.csv');
+% triangle = csvread('triangle_step7.csv');
+triangle = csvread('trajectory_8.csv');
 
 time = triangle(:,1);
 x = triangle(:,2);

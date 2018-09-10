@@ -19,26 +19,28 @@ pause(.5);
 % Setpoint(pp, -31.2, 54, -.6);
 % Plot6;
 
+
 %% Setpoints for part 7
 % Setpoint(pp, 0, 2.2, -3.5);
 % Setpoint(pp, 0, 71.7, -20.7);
 % Setpoint(pp, 0, -1.2, 29.5);
 % Setpoint(pp, 0, 2.2, -3.5);
-
+% PlotCSV7;
 
 
 %% Trajectory planning with part 9
 
 % Matrix of all the the setpoint joint angles (j1, j2, j3)
 trianglePts = [0, 0, 0;...
-               0, 71.7, -20.7;...
-               0, -1.2, 29.5;...
-               0, 2.2, -3.5];
+               0, 15, -17.5;...
+               0, 9.3, 16;...
+               0, 40.5, 1.5;...
+               0, 15, -17.5];
 
-[rows, ~] = size(trianglePts);
+[rows, cols] = size(trianglePts);
 v0 = 0;
 vf = 0;
-toffset = 2;    %difference between t0 and tf
+toffset = 1;    %difference between t0 and tf
 
 angles = zeros(1,3, 'single'); % to hold end positions 
 
@@ -63,8 +65,7 @@ for i = 2:rows
     
     % loop for each trajectory 
     while now < (startTime + toffset)
-        now = toc;       % update current time each loop iteration
-        disp(now);
+        now = toc;       % upd'trajectory_8.csv'ate current time each loop iteration
         % generate the positions for the 
         for j = 1:3
             angles(j) = trajectoryPosition(coeffiecients(j,:), now);
@@ -74,10 +75,11 @@ for i = 2:rows
         Setpoint(pp, angles(1), angles(2), angles(3));
         
         UpdateStickModel;
+        pause(.05);
     end
     
 end
-
+% PlotCSV7;
     
 % Clear up memory upon termination
 pp.shutdown();

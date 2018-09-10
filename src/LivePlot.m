@@ -59,14 +59,14 @@ while 1
     line2.YData = [line2.YData pos(2)];
     line3.XData = [line3.XData time];
     line3.YData = [line3.YData pos(3)];
-    fig = get(groot,'CurrentFigure');
-    if ~isempty(fig)
-        pp.shutdown();
-        return;
-    end
-    
+%     fig = get(groot,'CurrentFigure');
+%     if isempty(fig)
+%         break;
+%     end
+%     
     pause(.1);
 end
+
 pp.shutdown();
 
 
