@@ -55,9 +55,12 @@ xlabel('X Position (mm)');
 ylabel('Z Position (mm)');
 plot(x,z, '-b','LineWidth',2);
 
-scatter(186.5039, 194.6181,'r', 'filled');
-scatter(255.2153, -17.7121,'r', 'filled');
-scatter(171.0305,-27.5186,'r', 'filled');
-
-
+% Step 7
+% scatter(186.5039, 194.6181,'r', 'filled');
+% scatter(255.2153, -17.7121,'r', 'filled');
+% scatter(171.0305,-27.5186,'r', 'filled');
+% Step 9
+scatter(161.6531, 11.1744,'r', 'filled');
+scatter(245.0429, 10.2376,'r', 'filled');
+scatter(246.3415, 122.8539,'r', 'filled');
 
