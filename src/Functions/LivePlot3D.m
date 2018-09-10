@@ -1,5 +1,6 @@
-function endPos = LivePlot3D(q, start)
+function endPos = LivePlot3D(q, start, path)
 %% Initialize the figure 
+pointCSV = 'test.csv';
 if start
     constants;
     axes1 = axes('Parent',figure);
@@ -25,6 +26,9 @@ if start
     disp("Initializing Plot")
     endPos = 0;
     
+    if(exist(pointCSV, 'file') == 2)
+        delete(pointCSV);
+    end
 elseif ~start
     %% Create Plot
     L1 = 135; L2 = 175; L3 = 169.28;
@@ -48,7 +52,8 @@ elseif ~start
     label = sprintf('Joint 1: %0.1f \nJoint 2: %0.1f \nJoint 3: %0.1f', q(1), q(2), q(3));
     
     handleGetter=GraphSingleton();
-    R=handleGetter.getHandle();
+    R = handleGetter.getHandle();
+    P = handleGetter.getPathHandle();
     graphText = handleGetter.getGraphText();
     
     set(graphText, 'String', label);
@@ -56,7 +61,11 @@ elseif ~start
     drawnow();
     
     endPos = p3';
-    
+    if exist('path', 'var') && path
+        dlmwrite(pointCSV, endPos,'-append');
+        pointplot = csvread(pointCSV);
+        set(P.handle, 'xdata', pointplot(:,1), 'ydata', pointplot(:,2), 'zdata', pointplot(:,3));
+    end
 end
 end
 

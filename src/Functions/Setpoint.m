@@ -17,19 +17,16 @@ try
     pp.write(PID_ID, packet);
     pause(0.003);
     returnPacket = pp.read(PID_ID);
-    star = [];
+    
     for i=1:150
         [pos, ~, ~]= GetStatus(pp);
         pos = TIC_TO_ANGLE * pos;
-        endPos = LivePlot3D(pos, false);
+        endPos = LivePlot3D(pos, false, true);
         
         time = toc;
 %         time_joint_pos = [time endPos pos];
         time_joint_pos = [time endPos];
         dlmwrite(setpoint_csv, time_joint_pos,'-append');
-        
-        pause(.01);
-        %disp(endPos);
     end
 catch exception
     getReport(exception)

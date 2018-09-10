@@ -8,8 +8,9 @@ PID3=[.0025 0 .02];
 PIDConfig(pp, PID1, PID2, PID3);
 
 LivePlot3D([0,0,0], true);
-pause(2);
+pause(.5);
 tic;
+
 %% Setpoints for part 6
 % Setpoint(pp, 24.4, 14.8, 12.9);
 % Setpoint(pp, -0.2,82.2,-20.1);
@@ -19,10 +20,10 @@ tic;
 % Plot6;
 
 %% Setpoints for part 7
-% Setpoint(pp, 0, 2.2, -3.5);
-% Setpoint(pp, 0, 71.7, -20.7);
-% Setpoint(pp, 0, -1.2, 29.5);
-% Setpoint(pp, 0, 2.2, -3.5);
+Setpoint(pp, 0, 2.2, -3.5);
+Setpoint(pp, 0, 71.7, -20.7);
+Setpoint(pp, 0, -1.2, 29.5);
+Setpoint(pp, 0, 2.2, -3.5);
 
 % Clear up memory upon termination
 pp.shutdown();
