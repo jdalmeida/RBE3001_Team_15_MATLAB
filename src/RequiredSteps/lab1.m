@@ -30,8 +30,7 @@ myHIDSimplePacketComs.setPid(pid);
 myHIDSimplePacketComs.setVid(vid);
 myHIDSimplePacketComs.connect();
 % Create a PacketProcessor object to send data to the nucleo firmware
-pp = PacketProcessor(myHIDSimplePacketComs);
-
+pp = PacketProcessor(myHIDSimplePacketComs); 
 try
   SERV_ID = 37;            % we will be talking to server ID 37 on
                            % the Nucleo
@@ -59,7 +58,10 @@ try
 
      
       % Send packet to the server and get the response
-      returnPacket = pp.command(SERV_ID, packet);
+      pp.write(SERV_ID, packet);
+      pause(0.003);
+      returnPacket=  pp.read(SERV_ID);
+%       returnPacket = pp.command(SERV_ID, packet);
       toc
 
       if DEBUG
@@ -77,13 +79,13 @@ try
       %THis version will send the command once per call of pp.write
       pp.write(65, packet);
       pause(0.003);
-      returnPacket2=  pp.read(65);
+      returnPacket=  pp.read(65);
       %this version will start an auto-polling server and read back the
       %current data
       %returnPacket2=  pp.command(65, packet);
       if DEBUG
           disp('Received Packet 2:');
-          disp(returnPacket2);
+          disp(returnPacket);
       end
       toc
       pause(1) %timeit(returnPacket) !FIXME why is this needed?

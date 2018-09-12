@@ -8,10 +8,10 @@ returnPacket = pp.command(PROTOCOL_ID , packet);
 
 %% Plot Settings
 % Create figure
-figure1 = figure('Name','Joint Angle Live Plot');
+%figure1 = figure('Name','Joint Angle Live Plot');
 
 % Create axes
-axes1 = axes('Parent',figure1);
+axes1 = axes('Parent',figure);
 hold(axes1,'on');
 
 % Create line
@@ -43,7 +43,7 @@ axis([0 inf -180 180]);
 tic;
 
 %% runs the graph for ten seconds and plots the data into the lines sepcified above
-for i= 1:100
+while 1
     %run to get packet data
     % Send packet to the server and get the response
     returnPacket = pp.command(PROTOCOL_ID , packet);
@@ -59,9 +59,14 @@ for i= 1:100
     line2.YData = [line2.YData pos(2)];
     line3.XData = [line3.XData time];
     line3.YData = [line3.YData pos(3)];
-    
+%     fig = get(groot,'CurrentFigure');
+%     if isempty(fig)
+%         break;
+%     end
+%     
     pause(.1);
 end
+
 pp.shutdown();
 
 
