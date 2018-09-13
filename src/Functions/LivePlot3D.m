@@ -45,11 +45,14 @@ elseif ~start
     p2 = T02(1:3,4);
     p3 = T03(1:3,4);
     
+    endPos = p3';
+    
     framePos = [z p1 p2 p3];
     
     q = double(q);
     
-    label = sprintf('Joint 1: %0.1f \nJoint 2: %0.1f \nJoint 3: %0.1f', q(1), q(2), q(3));
+    label = sprintf('Joint 1: %0.1f  \tJoint 2: %0.1f  \tJoint 3: %0.1f  \nPx: %0.1f  \tPy: %0.1f  \tPz: %0.1f',...
+            q(1), q(2), q(3), endPos(1), endPos(2), endPos(3));
     
     handleGetter=GraphSingleton();
     R = handleGetter.getHandle();
@@ -60,7 +63,7 @@ elseif ~start
     set(R.handle, 'xdata', framePos(1,:), 'ydata', framePos(2,:), 'zdata', framePos(3,:));
     drawnow();
     
-    endPos = p3';
+    
     if exist('path', 'var') && path
         dlmwrite(pointCSV, endPos,'-append');
         pointplot = csvread(pointCSV);

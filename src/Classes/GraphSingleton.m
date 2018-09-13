@@ -48,7 +48,7 @@ classdef GraphSingleton
         function out = getGraphText()
             persistent posText;
             if isempty(posText)
-               posText = text(-30, -40, 370,'');
+               posText = text(215, 64, 382.7, '');
                out = posText;
             else
                 out= posText;
