@@ -1,8 +1,8 @@
 function endPos = LivePlot3D(q, start, path)
 %% Initialize the figure 
 pointCSV = 'pathPoints.csv';
+constants;
 if start
-    constants;
     axes1 = axes('Parent',figure);
     hold(axes1,'on');
     
