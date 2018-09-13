@@ -13,7 +13,7 @@ pz = pos(3);
 L4 = sqrt((pz-L1)^2 + px^2 + py^2);
 
 % Solve for theta 1
-theta1 = -atan2d(py, px);
+theta1 = atan2d(py, px);
 
 % Solve for theta 2
 alpha = atan2d(pz-L1, sqrt(px^2+py^2));
@@ -33,14 +33,13 @@ for i = 1:size(q)
     % If any angles are returned as imaginary, they are out of the range
     if ~isreal(q)
         
-        errormess = sprintf ('Joint %d angle values are not real values', i);
-        error(errormess);
+        % errormess = sprintf ("Joint %d angle values are not real values", q(i));
+        error("Joint %d angle values are not real values", q(i));
     end
     
     % To fill in with numbers for mechanical bounds
-    if jointlimits(i,1) > q(i) || q(i) > jointlimits(i,2)
-        errormess = sprintf('Joint %d angle values are outside of the workspace', i);
-        error(errormess);
+    if jointlimits(
+        error("Joint %d angle values are outside of the workspace", q(i));
     end
     
 end
