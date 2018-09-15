@@ -1,6 +1,7 @@
 init;
 pp = PacketProcessor(myHIDSimplePacketComs);
-
+writer=CSVWriter();
+fileName=writer.BeginCsv('step3b');
 PID1=[.0025 0 0];
 PID2=[.0025 0 .028];
 PID3=[.0025 0 .02];
@@ -16,17 +17,28 @@ angles1 = ikin(point1);
 angles2 = ikin(point2);
 
 Setpoint(pp, angles1(1), angles1(2), angles1(3));
-
-for i = 1:150
-    UpdateStickModel;
-    pause(.05);
+tic
+for i = 1:150*5
+    [anglePos, ~, ~]= GetStatus(pp);
+    anglePos = TIC_TO_ANGLE * anglePos;
+    endPos = LivePlot3D(anglePos, false, true);
+    time = toc;
+    time_joint_pos = [time endPos anglePos];
+    writer.AppendCsv(fileName, time_joint_pos);
+    pause(.01);
 end
-
+disp('finished first run');
+pause(1);
 Setpoint(pp, angles2(1), angles2(2), angles2(3));
 
-for i = 1:150
-    UpdateStickModel;
-    pause(.05);
+for i = 1:150*5
+    [anglePos, ~, ~]= GetStatus(pp);
+    anglePos = TIC_TO_ANGLE * anglePos;
+    endPos = LivePlot3D(anglePos, false, true);   
+    time = toc;
+    time_joint_pos = [time endPos anglePos];
+    writer.AppendCsv(fileName, time_joint_pos);
+    pause(.01);
 end
 
 
