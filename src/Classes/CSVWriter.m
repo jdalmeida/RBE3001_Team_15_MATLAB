@@ -16,10 +16,10 @@ classdef CSVWriter
             if nargin > 0
                 initCsvName=varargin{2};
                 i=0;
-                newCsvName = sprintf('%s%d.csv', initCsvName, i);
+                newCsvName = sprintf('Binaries/%s%d.csv', initCsvName, i);
                 while exist(newCsvName, 'file') == 2
                     i=i+1;
-                    newCsvName = sprintf('%s%d.csv', initCsvName, i);
+                    newCsvName = sprintf('Binaries/%s%d.csv', initCsvName, i);
                 end
                 name=newCsvName;
             else
@@ -27,6 +27,7 @@ classdef CSVWriter
             end
             
         end
+        %% put file name then data
         function AppendCsv(varargin)
             nameCsv=varargin{2};
             data=varargin{3};
