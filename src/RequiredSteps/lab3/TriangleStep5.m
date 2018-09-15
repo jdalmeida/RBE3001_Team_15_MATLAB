@@ -45,7 +45,6 @@ for i=0:3
         %gets position and sets point
         Setpoint(pp, qToSet(1), qToSet(2), qToSet(3));
         notCompleted = true;
-        disp(k);
         % loops until the arm reaches the setpoint
         while notCompleted
             [angles, ~, ~]= GetStatus(pp);
