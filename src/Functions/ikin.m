@@ -1,4 +1,5 @@
 function [q] = ikin(pos)
+%% input position as a 1x3 points and returns joint angles in a 1x3
 constants;
 
 L1 = 135;
