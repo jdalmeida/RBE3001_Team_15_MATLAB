@@ -12,10 +12,11 @@ PIDConfig(pp, PID1, PID2, PID3);
 
 LivePlot3D([0,0,0], true);
 pause(.5);
+%% Inject the reader here
 
-Triangle=[170 100 60;...
-          170 -50 60;...
-          240 -50 60];
+% Triangle=[170 100 60;...
+%           170 -50 60;...
+%           240 -50 60];
 
 %% Initialize it to 3rd Setpoint
 % To make the csv cleaner
@@ -29,8 +30,8 @@ t0 = 0;
 tf = 0;
 q0 = 0;
 qf = 0;
-v0 = 0;
-vf = 0;
+v0 = 0.5;   %this .5, .5 makes it run way smoother
+vf = 0.5;
 a0 = 0;
 af = 0;
 
