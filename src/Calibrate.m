@@ -8,11 +8,9 @@ try
   pause(.1);
   count = 10;
   disp("getting averages: ");
-  
-%   calb_csv='null.csv';
-%   if(exist(calb_csv, 'file') == 2)
-%       delete(calb_csv);
-%   end
+%   myWriter= CSVWriter();
+%   fileName=myWriter.BeginCsv('calib');
+    
   tic
   for i = 1:count
       % Send packet to the server and get the response
@@ -49,6 +47,7 @@ for i=0:10
     returnPacket = pp.command(CALIBRATION_ID, firstpacket);
     finalvals=returnPacket';
     dispvals=finalvals([1,4,7]);
+%     myWriter.AppendCsv(fileName, finalvals([1,4,7]));
     disp(dispvals);
     time = toc;
 %     dlmwrite(calb_csv,[dispvals time],'-append');
