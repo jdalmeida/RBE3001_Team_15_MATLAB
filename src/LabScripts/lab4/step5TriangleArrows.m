@@ -13,7 +13,7 @@ PID3=[.002 0 .02];
 PIDConfig(pp, PID1, PID2, PID3);
 
 LivePlot3D([0,0,0], true);
-pause(.5);
+pause(.1);
 %% Inject the reader here
 
 Triangle=[170 100 60;...
@@ -47,6 +47,8 @@ posn = zeros(1,3, 'single'); % to hold end positions
 angles = zeros(1,3, 'single'); 
 % Initial point is the 3rd vertex of the triangle
 prevPos = Triangle(3, :);
+
+q = quiver3(0,0,0,0,0,0);
 
 tic;
 
@@ -89,8 +91,7 @@ for i = 0:3
         
         jPos = TIC_TO_ANGLE * jPos;
         jVel = TIC_TO_ANGLE * jVel;
-%         disp(jPos);
-%         disp(jVel);
+        disp(jVel);
         tipPos = LivePlot3D(jPos, false, true);
         
         % Calculate and graph tip velocities
@@ -100,9 +101,11 @@ for i = 0:3
         x = tipPos(1);
         y = tipPos(2);
         z = tipPos(3);
-        u = tipVel(1);
-        v = tipVel(2);
-        w = tipVel(3);
+        
+        u = double(tipVel(1));
+        v = double(tipVel(2));
+        w = double(tipVel(3));
+        
         
         quiver = handleGetter.getVelArrowHandle();
         set(quiver.handle, 'XData', x, 'YData', y, 'ZData', z, 'UData', u, ...
