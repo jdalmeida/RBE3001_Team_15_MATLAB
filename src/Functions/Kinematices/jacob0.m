@@ -20,4 +20,3 @@ Jac = [ -sind(q1)*(C*sind(q2 + q3) + B*cosd(q2)),  cosd(q1)*(C*cosd(q2 + q3) - B
 
 numJac = vpa(Jac, 4);
 end
-

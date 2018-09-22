@@ -45,6 +45,15 @@ classdef GraphSingleton
                 out = P;
             end
         end
+        function out = getVelArrowHandle()
+            persistent quiver;
+            if isempty(quiver)
+                quiver.handle = quiver3(0,0,0,0,0,0);
+                out = quiver;
+            else
+                out = quiver;
+            end
+        end
         function out = getGraphText()
             persistent posText;
             if isempty(posText)

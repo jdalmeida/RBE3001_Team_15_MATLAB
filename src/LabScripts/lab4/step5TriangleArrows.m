@@ -2,8 +2,10 @@ init;
 pp = PacketProcessor(myHIDSimplePacketComs);
 
 %% Initialize Servers and Points
+
+handleGetter=GraphSingleton();
 writer=CSVWriter();
-fileName=writer.BeginCsv('step7QuinticTriangle');
+fileName=writer.BeginCsv('step5TriangleArrows');
 
 PID1=[.0025 0 0];
 PID2=[.0025 0 .028];
@@ -30,8 +32,8 @@ t0 = 0;
 tf = 0;
 q0 = 0;
 qf = 0;
-v0 = 0.5;   %this .5, .5 makes it run way smoother
-vf = 0.5;
+v0 = 0;   %this .5, .5 makes it run way smoother
+vf = 0;
 a0 = 0;
 af = 0;
 
@@ -65,8 +67,8 @@ for i = 0:3
     for axis = 1:3
         condsMat(axis, 1) = startTime;           %t0
         condsMat(axis, 2) = startTime + toffset; %tf
-        condsMat(axis, 3) = prevPos(axis);   %q0
-        condsMat(axis, 4) = setPos(axis);    %qf
+        condsMat(axis, 3) = prevPos(axis);       %q0
+        condsMat(axis, 4) = setPos(axis);        %qf
     end
     
     % loop across the trajectory
@@ -77,19 +79,39 @@ for i = 0:3
         for j = 1:3
             posn(j) = QuinticTraj(now, condsMat(j, :)); %this is a 1x3 that stores x y z of tip position
         end
+%         disp(posn);
         angles = ikin(posn);
         % Go to the setpoint based on the equation
         Setpoint(pp, angles(1), angles(2), angles(3));
         
         % Update 3D Model
-        [anglePos, ~, ~]= GetStatus(pp);
-        anglePos = TIC_TO_ANGLE * anglePos;
-        tipPos = LivePlot3D(anglePos, false, true);
+        [jPos, jVel, ~]= GetStatus(pp);
+        
+        jPos = TIC_TO_ANGLE * jPos;
+        jVel = TIC_TO_ANGLE * jVel;
+%         disp(jPos);
+%         disp(jVel);
+        tipPos = LivePlot3D(jPos, false, true);
+        
+        % Calculate and graph tip velocities
+        tipVel = fwVel(jPos, jVel);
+        jac = jacob0(jPos);
+        
+        x = tipPos(1);
+        y = tipPos(2);
+        z = tipPos(3);
+        u = tipVel(1);
+        v = tipVel(2);
+        w = tipVel(3);
+        
+        quiver = handleGetter.getVelArrowHandle();
+        set(quiver.handle, 'XData', x, 'YData', y, 'ZData', z, 'UData', u, ...
+            'VData', v, 'WData', w);
         
         % Adds to CSV
-        data = [now tipPos anglePos];
+        data = [now tipPos jPos];
         writer.AppendCsv(fileName, data);
-        
+        now = toc;
     end
     pause(.25);
     prevPos=setPos;
