@@ -32,8 +32,8 @@ t0 = 0;
 tf = 0;
 q0 = 0;
 qf = 0;
-v0 = 0;   %this .5, .5 makes it run way smoother
-vf = 0;
+v0 = .5;   %this .5, .5 makes it run way smoother
+vf = .5;
 a0 = 0;
 af = 0;
 
