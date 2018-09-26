@@ -5,9 +5,9 @@ Jacobian = jacob0(q);
 
 Jinvertable = Jacobian(1:3, :);
 
-invJ = inv(Jinvertable);
+% invJ = inv(Jinvertable);
 
-jVel = invJ * tipVel;
+jVel = Jinvertable \ tipVel;
 
 end
 

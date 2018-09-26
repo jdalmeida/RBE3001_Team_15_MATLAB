@@ -39,7 +39,7 @@ elseif nargin==1
  % End of Suspend figure functions
  
  
-set(gcf,'Pointer','fullcross')  
+set(gcf,'Pointer','crosshair')  
 
 
 
