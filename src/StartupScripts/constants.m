@@ -1,6 +1,8 @@
 %% Constants
 TIC_TO_ANGLE = 360.0/4096.0;
 ANGLE_TO_TIC = 4096.0/360.0;
+TIC_TO_RAD=2*pi/4096;
+RAD_TO_TIC=4096/2*pi;
 
 %% Server ID Library
 PID_ID = 37;                 % give robot a set point
