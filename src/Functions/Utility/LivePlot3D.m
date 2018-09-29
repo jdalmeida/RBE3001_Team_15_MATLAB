@@ -1,6 +1,7 @@
-function endPos = LivePlot3D(q, start, path)
-% Takes the joint positions in degrees, bool start and bool path and gives end efector position
+function endPos = LivePlot3D(q, start, path, f)
+
 %% Initialize the figure 
+% Takes the joint positions in degrees, bool start and bool path and gives end efector position
 pointCSV = 'pathPoints.csv';
 constants;
 if start
@@ -53,8 +54,8 @@ elseif ~start
     
     q = double(q);
     
-    label = sprintf('Joint 1: %0.1f  \tJoint 2: %0.1f  \tJoint 3: %0.1f  \nPx: %0.1f  \tPy: %0.1f  \tPz: %0.1f',...
-            q(1), q(2), q(3), endPos(1), endPos(2), endPos(3));
+    label = sprintf('Joint 1: %0.1f  \tJoint 2: %0.1f  \tJoint 3: %0.1f  \nPx: %0.1f  \tPy: %0.1f  \tPz: %0.1f  \nFx:%0.1f  \tFy:%0.1f  \tFz:%0.1f    \t|F|:%.01f',...
+            q(1), q(2), q(3), endPos(1), endPos(2), endPos(3), f(1), f(2), f(3), norm(f));
     
     handleGetter=GraphSingleton();
     R = handleGetter.getHandle();
