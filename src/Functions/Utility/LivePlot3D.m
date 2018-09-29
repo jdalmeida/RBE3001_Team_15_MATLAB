@@ -1,5 +1,5 @@
 function endPos = LivePlot3D(q, start, path)
-%% Takes the joint positions in degrees, bool start and bool path and gives end efector position
+% Takes the joint positions in degrees, bool start and bool path and gives end efector position
 %% Initialize the figure 
 pointCSV = 'pathPoints.csv';
 constants;

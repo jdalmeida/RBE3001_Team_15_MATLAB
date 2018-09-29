@@ -9,11 +9,9 @@ PID2=[.0025 0 .028];
 PID3=[.002 0 .02];
 PIDConfig(pp, PID1, PID2, PID3);
 
-% init liveplot
-LivePlot3D([0,0,0], true);
-pause(.1);
 
-%% Move to directly overhead
+%% Move to directly overhead to get all offsets
+% No Mass on the end 
 Setpoint(pp, 0, 90, 0);
 pause(1);
 Setpoint(pp, 0, 90, 90);
@@ -26,15 +24,15 @@ for i = 1:counts
 [pos, vel, torq] = GetStatus(pp);
 disp(torq)
 
-pos = TIC_TO_ANGLE * pos;
-LivePlot3D(pos, false, true);
-
 y0total = y0total + torq;
+pause(.01);
 end
 
-avgy0 = y0total / counts;
-disp('avg offset');
-disp(avgy0);
+% offset in terms of adc values
+avgoffset = y0total / counts;
+
+
+%% Find torque due to link 3
 
 Setpoint(pp, 0, 90, 0);
 pause(1);
@@ -43,29 +41,42 @@ pause(1);
 Setpoint(pp, 0, 0, 90);
 pause(1);
 
-disp('PUT KNOWN WEIGHT ON END OF ARM');
-pause(2);
 
-totalkx = zeros(1,3, 'single');
+totaltorq = zeros(1,3, 'single');
 for i = 1:counts
 [pos, vel, torq] = GetStatus(pp);
 disp(torq)
 
-pos = TIC_TO_ANGLE * pos;
-LivePlot3D(pos, false, true);
+totaltorq = totaltorq + torq;
 
-totalkx = torq - avgy0
-
-pause(.05);
+pause(.01);
 end
 
-avgkx = totalkx/counts;
 
-j2k = avgkx(2) / (.25 * 9.8 * (.175+.16928));
-j3k = avgkx(3) / (.25 * 9.8 * (.16928));
+
+
+
+Setpoint(pp, 0, 90, 0);
+pause(1);
+
+totaltorq = zeros(1,3, 'single');
+for i = 1:counts
+[pos, vel, torq] = GetStatus(pp);
+disp(torq)
+
+totaltorq = totaltorq + torq;
+
+pause(.01);
+end
+
+avgtorq = totaltorq/counts;
+avgkx = avgtorq - avgoffset;
+
+j2k = avgkx(2) / (.25 * 9.8 * (175+169.28));
+j3k = avgkx(3) / (.25 * 9.8 * (169.28));
 
 disp('offset');
-disp(avgy0);
+disp(avgoffset);
 
 disp('joint 2 scale factor');
 disp(j2k);

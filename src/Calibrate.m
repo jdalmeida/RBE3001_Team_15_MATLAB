@@ -32,7 +32,7 @@ try
   firstpacket(2) = avg(2);
   firstpacket(3) = avg(3);
   pp.command(CALIBRATION_ID, firstpacket);
-  disp(firstpacket);  
+  disp(firstpacket');  
 
 
 % Clear up memory upon termination

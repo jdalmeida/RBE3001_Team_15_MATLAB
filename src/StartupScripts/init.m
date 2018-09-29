@@ -1,12 +1,12 @@
 clear
 close all;
-clear java
+clear java;
 %clear import;
 clear classes;
 vid = hex2dec('3742');
 pid = hex2dec('0007');
-disp (vid );
-disp (pid);
+% disp (vid );
+% disp (pid);
 javaaddpath ../lib/SimplePacketComsJavaFat-0.6.4.jar;
 import edu.wpi.SimplePacketComs.*;
 import edu.wpi.SimplePacketComs.device.*;

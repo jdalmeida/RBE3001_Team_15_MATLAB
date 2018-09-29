@@ -12,5 +12,5 @@ returnPacket=  pp.read(PROTOCOL_ID);
 trans = returnPacket';
 pos = trans([1,4,7]);
 vel = trans([2,5,8]);
-force = trans([3,5,9]);
+force = trans([3,6,9]);
 end
