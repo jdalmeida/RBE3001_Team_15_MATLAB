@@ -8,14 +8,14 @@ fileName=writer.BeginCsv('val9');
 
 LivePlot3D([0,0,0], true);
 pause(.1);
-          
+
 %% Initialize it to 3rd Setpoint
 % To make the csv cleaner
 firstPoint_Angles = [0,0,0];
 Setpoint(pp, firstPoint_Angles(1), firstPoint_Angles(2), firstPoint_Angles(3));
 pause(.5);
 
-LivePlot3D(firstPoint_Angles, false, true);
+LivePlot3D(firstPoint_Angles, false, true, [0,0,0]);
 prevPos = fwkin(0,0,0)';
 
 secPerPoint=1;
@@ -47,10 +47,14 @@ while 1
         % get the timestamp set up and let the arm move for a bit
         % using the pause
         tic;
-        [curPos, ~, ~]= GetStatus(pp);
+        [curPos, ~, torq]= GetStatus(pp);
         curPos=TIC_TO_ANGLE * curPos;
-        LivePlot3D(curPos, false, true);
-
+        
+        actualTorque=RawToTorque(torq);
+        tipForce=statics3001(curPos, actualTorque);
+        
+        LivePlot3D(curPos, false, true, tipForce);
+        
         timeSpan=toc;
         
         % Set up the next setpoint using the velocity found above
@@ -60,7 +64,7 @@ while 1
         end
         
         % Move the robot to the setpoint and increase runtime
-        Setpoint(pp,nextjPos(1), nextjPos(2), nextjPos(3));         
+        Setpoint(pp,nextjPos(1), nextjPos(2), nextjPos(3));
         timeSpan=toc;
         runTime=runTime+timeSpan;
         totalTime=totalTime+timeSpan;
@@ -68,7 +72,7 @@ while 1
         %creates a csv with time, cartisian velocities, tip magnitude, and
         %joint velocities
         %data= [totalTime cartisianVel norm(cartisianVel) jointVels(1:3, 1)' ];
-       % writer.AppendCsv(fileName, data);
+        % writer.AppendCsv(fileName, data);
     end
     
     prevPos=setPos;
