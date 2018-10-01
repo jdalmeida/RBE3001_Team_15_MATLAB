@@ -16,33 +16,43 @@ count = 100;
 
 % force = zeros(5,3,'single');
 
-Setpoint(pp, 30, 35, -25);
+Setpoint(pp, 0, 35, -25);
 pause(1);
     
 k = 1;
 while 1
-    
+    disp('Calculating');
 %     pause(1);
     total = zeros(1,3,'single');
+    totalF = zeros(1,3,'single');
     
     for j = 1:count
         [pos, ~, torq] = GetStatus(pp);
+        torq = torq * 4096;
         pos = TIC_TO_ANGLE * pos;
         
         actualTorque=RawToTorque(torq);
         
         tipForce=statics3001(pos, actualTorque);
+        totalF = totalF + tipForce';
         total = total + torq;
         pause(.01);
     end
     
     force = total / count;
+    disp('Raw ADC');
     disp(force);
     
     n = norm(force);
+    disp('Norm Raw');
     disp(n);
     
-    if n > 2.163
+    tf = totalF / count;
+%     disp('Tip Force');
+%     disp(tf);
+    
+    
+    if n < 3.93e+03
         disp('light');
     else
         disp('heavy');
