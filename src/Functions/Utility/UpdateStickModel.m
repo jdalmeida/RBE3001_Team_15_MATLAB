@@ -1,6 +1,11 @@
-[anglePos, ~, ~]= GetStatus(pp);
-anglePos = TIC_TO_ANGLE * anglePos;
-tipPos = LivePlot3D(anglePos, false, true);
+[pos, ~, torq]= GetStatus(pp);
 
-time = toc;
-time_joint_pos = [time tipPos anglePos];
+pos = TIC_TO_ANGLE * pos;
+actualTorque=RawToTorque(torq);
+
+tipForce=statics3001(pos, actualTorque);
+
+LivePlot3D(pos, false, true, tipForce);
+% 
+% time = toc;
+% time_joint_pos = [time tipPos anglePos];

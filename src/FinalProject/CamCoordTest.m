@@ -8,10 +8,12 @@ while 1
 %% Data acquisiton and enhancement
 %img = imread('camTest.png');
 img = snapshot(cam);
+
 %% Segment on color
 [BWBlue,~]=FindBlue(img);
 [BWYellow,~]=FindYellow(img);
 [BWGreen, ~]=FindGreen(img);
+
 %% post process with dilation
 se = strel('sphere',6);
 %Yellow
@@ -19,6 +21,7 @@ BWYellow=PostProcess(BWYellow);
 %Blue
 BWBlue=PostProcess(BWBlue);
 BWGreen=PostProcess(BWGreen);
+
 %% information extraction
 sBlue = regionprops(BWBlue,'centroid');
 centrBlue = cat(1, sBlue.Centroid);
@@ -27,6 +30,7 @@ centrYellow = cat(1, sYellow.Centroid);
 sGreen = regionprops(BWGreen,'centroid');
 centrGreen = cat(1, sGreen.Centroid);
 
+%% Show on live feed
 BW = imfuse(BWBlue, BWYellow);
 BW = imfuse(BW, BWGreen);
 imshow(BW);

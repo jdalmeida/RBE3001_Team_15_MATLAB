@@ -70,7 +70,7 @@ elseif ~start
     if exist('path', 'var') && path
         dlmwrite(pointCSV, endPos,'-append');
         pointplot = csvread(pointCSV);
-        set(P.handle, 'xdata', pointplot(:,1), 'ydata', pointplot(:,2), 'zdata', pointplot(:,3));
+        %set(P.handle, 'xdata', pointplot(:,1), 'ydata', pointplot(:,2), 'zdata', pointplot(:,3));
     end
 end
 end
