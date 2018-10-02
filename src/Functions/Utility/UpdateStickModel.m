@@ -5,7 +5,7 @@ actualTorque=RawToTorque(torq);
 
 tipForce=statics3001(pos, actualTorque);
 
-LivePlot3D(pos, false, true, tipForce);
+LivePlot3D(pos, false, false, tipForce);
 % 
 % time = toc;
 % time_joint_pos = [time tipPos anglePos];

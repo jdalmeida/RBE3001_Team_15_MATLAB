@@ -15,11 +15,12 @@ img = snapshot(cam);
 [BWGreen, ~]=FindGreen(img);
 
 %% post process with dilation
-se = strel('sphere',6);
+% se = strel('sphere',6);
 %Yellow
 BWYellow=PostProcess(BWYellow);
 %Blue
 BWBlue=PostProcess(BWBlue);
+%Green
 BWGreen=PostProcess(BWGreen);
 
 %% information extraction
@@ -33,6 +34,7 @@ centrGreen = cat(1, sGreen.Centroid);
 %% Show on live feed
 BW = imfuse(BWBlue, BWYellow);
 BW = imfuse(BW, BWGreen);
+BW = imfuse(BW, img);
 imshow(BW);
 hold on
 if size(centrBlue)>0

@@ -3,8 +3,6 @@ pp = PacketProcessor(myHIDSimplePacketComs);
 
 LivePlot3D([0,0,0], true);
 
-p = 
-
 while 1
     centroids  = FindCentroid();
     [pos, ~, torq]= GetStatus(pp);

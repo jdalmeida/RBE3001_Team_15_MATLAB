@@ -15,6 +15,25 @@ PIDCONFIG_ID = 65;           % update pid values for each joint
 % cols = min max
 % rows = joint
 jointlimits = [-60 60; -4 106; -34 200];
+
 %% Gripper Position Constants
 OPEN=.9;
 CLOSE=.1;
+
+%% Ball Info
+
+%Colors
+BLUE = 1;
+GREEN = 2;
+YELLOW = 3;
+EMPTY = -1;
+
+COLORS = [BLUE, GREEN, YELLOW];
+
+%Weights
+LIGHT = 1;
+HEAVY = 2;
+
+
+jWorkPos = [0, 25, -30];
+tWorkPos = fwkin(jWorkPos(1), jWorkPos(2), jWorkPos(3));

@@ -20,8 +20,7 @@ if start
     xlim(axes1,[-100 400]);
     ylim(axes1,[-250 250]);
     zlim(axes1,[-100 400]);
-%     view(axes1,[-156.7 8.40000000000001]);
-    view(axes1,[-180 0]);
+    view(axes1,[104.8 32.8000000000001]);
     box(axes1,'on');
     grid(axes1,'on');
     
@@ -70,7 +69,7 @@ elseif ~start
     if exist('path', 'var') && path
         dlmwrite(pointCSV, endPos,'-append');
         pointplot = csvread(pointCSV);
-        %set(P.handle, 'xdata', pointplot(:,1), 'ydata', pointplot(:,2), 'zdata', pointplot(:,3));
+        set(P.handle, 'xdata', pointplot(:,1), 'ydata', pointplot(:,2), 'zdata', pointplot(:,3));
     end
 end
 end
