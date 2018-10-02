@@ -1,10 +1,10 @@
-function MoveToPointControl(pp, setPos)
+function MoveToPointVel(pp, setPos)
 %MOVETOPOINTCONTROL Takes in setpoint and moves arm using velocity control
 constants;
 
 setPos = reshape(setPos, [3,1]);
 
-secPerPoint = .75;
+secPerPoint = 1.5;
 totalTime = 0;
 setjPos = ikin(setPos);
 runTime=0;

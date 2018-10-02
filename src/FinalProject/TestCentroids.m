@@ -27,12 +27,11 @@ pyellow.handle = scatter3(0,0,0, scale,'MarkerFaceColor',[1 0.843137264251709 0]
 scatterHandles = [pblue, pgreen, pyellow];
 
 Gripper(pp, OPEN);
+i = 0;
 
 
 %% Beginning of Loop
 % while 1
-
-UpdateStickModel;
 
 %generates 3d-array for the centroids of the bulbs
 centroids = FindCentroid();
@@ -71,43 +70,47 @@ for i = 1:3
         continue;
     end
     
-    xBall = currBall(1);
-    yBall = currBall(2);
+    xBall = currBall(1) * 1.25;
+    yBall = currBall(2) * 1.2;
     zBall = currBall(3);
     colorBall = currBall(4);
     weightBall = currBall(5);
     
+    try
+        s = ikin([xBall, yBall, zBall]);
+    catch error
+        continue;
+    end
+    
+    
     % Move to Work Position
-    MoveToPointControl(pp, tWorkPos);
-    UpdateStickModel;
+    MoveToPointTraj(pp, tWorkPos);
     
     % Move to ball
-    MoveToPointControl(pp, [xBall, yBall, tWorkPos(3)]);
-    UpdateStickModel;
+    MoveToPointTraj(pp, [xBall, yBall, tWorkPos(3)]);
     
-    MoveToPointControl(pp, [xBall, yBall, zBall]);
+    MoveToPointTraj(pp, [xBall, yBall, zBall]);
     Gripper(pp, CLOSE);
     pause(.5)
-    UpdateStickModel;
     
     % Move to Work Position
-    MoveToPointControl(pp, [xBall, yBall, tWorkPos(3)]);
+    MoveToPointTraj(pp, tWorkPos);
     
-    MoveToPointControl(pp, tWorkPos);
-    UpdateStickModel;
-    
-    Gripper(pp, OPEN);
-    pause(.5)
     % Weigh ball
     
-    % Get dropoff ball
+    % Get dropoff pos
     
     % Drop off
+    MoveToPointTraj(pp, [Pokeballs(i, 1), Pokeballs(i, 2), tWorkPos(3)]);
+    MoveToPointTraj(pp, Pokeballs(i, :));
+    Gripper(pp, OPEN);
+    pause(.5)
+    MoveToPointTraj(pp, [Pokeballs(i, 1), Pokeballs(i, 2), tWorkPos(3)]);
     
     % waitforbuttonpress;
 end
 
-
-
+MoveToPointTraj(pp, tWorkPos);
 
 pp.shutdown();
+clear
