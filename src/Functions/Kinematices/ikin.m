@@ -39,7 +39,7 @@ for i = 1:size(q)
     
     % To fill in with numbers for mechanical bounds
     if jointlimits(i,1) > q(i) || q(i) > jointlimits(i,2)
-        errormess = sprintf('Joint %d angle values are outside of the workspace', i);
+        errormess = sprintf('Joint %d angle values are outside of the workspace. Angle: %d', i, q(i));
         error(errormess);
     end
     

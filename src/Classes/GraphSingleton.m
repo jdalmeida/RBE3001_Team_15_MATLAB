@@ -69,8 +69,12 @@ classdef GraphSingleton
             end
         end
         function out = getBallsHandle()
-            persistent scatterHandles;
-            if isempty(scatterHandles)
+%             persistent scatterHandles;
+            persistent pblue;
+            persistent pgreen;
+            persistent pyellow;
+            
+            if isempty(pblue)
                 scale = 100;
                 pblue.handle = scatter3(0,0,0, scale, 'MarkerFaceColor',[0 0.749019622802734 0.749019622802734],...
                     'MarkerEdgeColor',[0 0.749019622802734 0.749019622802734]);
@@ -78,10 +82,14 @@ classdef GraphSingleton
                     'MarkerEdgeColor',[0.466666668653488 0.674509823322296 0.18823529779911]);
                 pyellow.handle = scatter3(0,0,0, scale,'MarkerFaceColor',[1 0.843137264251709 0],...
                     'MarkerEdgeColor',[1 0.843137264251709 0]);
-                scatterHandles = [pblue, pgreen, pyellow];
-                out = scatterHandles;
+%                 scatterHandles = [pblue, pgreen, pyellow];
+                out = pblue;
+%                 out2 = pgreen;
+%                 out3 = pyellow;
             else
-                out= scatterHandles;
+                out = pblue;
+%                 out2 = pgreen;
+%                 out3 = pyellow;
             end
         end
     end

@@ -33,7 +33,7 @@ firstPoint_Angles = ikin(Triangle(3, :));
 Setpoint(pp, firstPoint_Angles(1), firstPoint_Angles(2), firstPoint_Angles(3));
 pause(.5);
 tic;
-secPerPoint=2;
+secPerPoint=5;
 totalTime=0;
 %% Loop through each setpoint
 for i = 0:3
@@ -65,14 +65,14 @@ for i = 0:3
         [curPos, ~, ~]= GetStatus(pp);
         curPos=TIC_TO_ANGLE * curPos;
         
-        LivePlot3D(curPos, false, true);
+        LivePlot3D(curPos, false, true, [0,0,0]);
         pause(.1);
         timeSpan=toc;
         
         % Set up the next setpoint using the velocity found above
         % and integrate the velocity using the timespan
         for j=1:3
-            nextPos(j)=setPos(j)+jointVels(j)*timeSpan;
+            nextPos(j)=jointVels(j)*timeSpan; %setPos(j)+
         end
         
         % Move the robot to the setpoint and increase runtime
@@ -90,4 +90,5 @@ for i = 0:3
     % reset previous point for the next run
     prevPoint=setPos;
 end
+pp.shutdown();
 clear

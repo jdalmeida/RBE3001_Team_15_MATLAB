@@ -14,7 +14,7 @@ PIDCONFIG_ID = 65;           % update pid values for each joint
 %% Joint Limits in degrees
 % cols = min max
 % rows = joint
-jointlimits = [-90 90; -4 106; -34 200];
+jointlimits = [-90 90; -20 120; -40 230];
 
 %% Gripper Position Constants
 OPEN=.9;
@@ -37,9 +37,12 @@ HEAVY = 2;
 %Drop Off 
 % light blue, green, yellow
 % heavy, blue, green, yellow
-Pokeballs = [54, 220, -10;
-    131, 217, -16;
-    173, 206, -13];
+% Pokeballs = [54, 220, -10;
+%     131, 217, -16;
+%     173, 206, -13];
+Pokeballs = [36, 220, 22;
+    120, 200, 23;
+    210, 210, 23];
 
 jWorkPos = [0, 25, -30];
 tWorkPos = fwkin(jWorkPos(1), jWorkPos(2), jWorkPos(3));

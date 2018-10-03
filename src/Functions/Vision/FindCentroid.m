@@ -1,14 +1,10 @@
-function [c] = FindCentroid()
+function [c] = FindCentroid(cam)
 %GETCENTROID Input is an image
 % outputs the array of centroid coordinates in a 3d array
 % Columns: (x, y, m, n)
 % Rows: 1 set of coordinates for object
 % Page: 1-Blue 2-Green 3-Yellow
-persistent cam;
-if isempty(cam) % connect to webcam iff not connected
-    cam = webcam();
-    pause(1); % give the camera time to adjust to lighting
-end
+
 
 img = snapshot(cam);
 

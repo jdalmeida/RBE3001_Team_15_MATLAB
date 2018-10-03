@@ -1,5 +1,24 @@
-function MoveToPointTraj(pp, setPos)
-%MOVETOPOINTCONTROL Takes in setpoint and moves arm using velocity control
+function MoveToPointTrajBlocking(pp, setPos)
+%MOVETOPOINTCONTROL Takes
+tic;
+disp(toc);
+
+t0 = 0;
+tf = 0;
+q0 = 0;
+qf = 0;
+v0 = 20;   %this .5, .5 makes it run way smoother
+vf = v0;
+a0 = 0;
+af = 0;
+
+
+conds = [t0, tf, q0, qf, v0, vf, a0, af];
+
+%creates 3xcond size for joints (joints = rows)
+condsMat = [conds; conds; conds];
+
+[curPos, ~, ~]= GetStatus(pp);
 constants;
 
 setPos = reshape(setPos, [3,1]);
@@ -9,10 +28,10 @@ t0 = 0;
 tf = 0;
 q0 = 0;
 qf = 0;
-v0 = 30.0;   %this .5, .5 makes it run way smoother
+v0 = 20;   %this .5, .5 makes it run way smoother
 vf = v0;
-a0 = 1;
-af = 1;
+a0 = 0;
+af = 0;
 
 
 conds = [t0, tf, q0, qf, v0, vf, a0, af];
@@ -29,11 +48,10 @@ distance = abs(norm(prevPos) - norm(setPos));
 
 toffset = distance / vf;    %difference between t0 and tf
 
-if toffset < 1.25
-    toffset = 1.25;
+if toffset < 1
+    toffset = 1;
 end
 
-tic;
 posn = zeros(1,3, 'single'); % to hold end positions
 angles = zeros(1,3, 'single');
 
@@ -48,6 +66,7 @@ for axis = 1:3
     condsMat(axis, 4) = setPos(axis);        %qf
 end
 
+disp(toc);
 % loop across the trajectory
 while now < (startTime + toffset)
     now = toc;       % update current time each loop iteration
@@ -63,7 +82,6 @@ while now < (startTime + toffset)
     
     % Update 3D Model
     UpdateStickModel;
-    pause(.1);
 end
 
 
