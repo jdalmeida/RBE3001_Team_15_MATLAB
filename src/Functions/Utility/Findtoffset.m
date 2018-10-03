@@ -10,8 +10,8 @@ toffset = distance / setVel;
 
 % minimum time needs to be 1 or else everything break
 % idk y tho
-if toffset < 1
-    toffset = 1;
+if toffset < 1.5
+    toffset = 1.5;
 end
 
 end

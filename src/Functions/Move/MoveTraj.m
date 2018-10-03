@@ -25,7 +25,7 @@ angles = zeros(1,3, 'single');
 % iterates through each of the axes to set conditions
 for axis = 1:3
     condsMat(axis, 1) = startTime;           %t0
-    condsMat(axis, 2) = startTime + toffset; %tf
+    condsMat(axis, 2) = startTime + 1.5; %tf
     condsMat(axis, 3) = startPos(axis);       %q0
     condsMat(axis, 4) = setPos(axis);        %qf
 end

@@ -19,9 +19,7 @@ pyellow.handle = scatter3(0,0,0, scale,'MarkerFaceColor',[1 0.843137264251709 0]
     'MarkerEdgeColor',[1 0.843137264251709 0]);
 scatterHandles = [pblue, pgreen, pyellow];
 
-
 alg = 'trajectory';
-state = States.Start;
 
 Gripper(pp, OPEN);
 
@@ -31,10 +29,13 @@ cam = webcam();
 % Initial Declarations
 ball = 1;
 setVel = 20;
+
 curPos = GetCurrentPos(pp);
 setPos = tWorkPos;
+state = States.Start;
 
-toffset = Findtoffset(curPos, setPos, setVel);
+% toffset = Findtoffset(curPos, setPos, setVel);
+toffset = 1.5;
 
 tic;
 startTime = toc;
@@ -42,12 +43,11 @@ startTime = toc;
 while 1
     % Continuously poll camera for ball information
     ballInfo = GetBallPos(cam);
-    UpdateBallPlot;
     
     currBall = ballInfo(ball, :);
     
     if currBall(4) == -1
-        continue;
+        state = 'Next Ball';
     end
     
     xBall = currBall(1);
@@ -62,18 +62,19 @@ while 1
             Move(pp, alg, setPos, curPos, startTime, toffset);
             now = toc;
             if now > startTime + toffset
-                curPos = GetCurrentPos(pp);
-                state = States.MoveAboveBall;
+                disp('Next state: Move Above Ball');
+                curPos = tWorkPos;
                 setPos = [xBall, yBall, tWorkPos(3)];
-                toffset = Findtoffset(curPos, setPos, setVel);
+%                 toffset = Findtoffset(curPos, setPos, setVel);
+                state = States.MoveAboveBall;
                 startTime = toc;
             end
-            
         case 'MoveAboveBall'
             Move(pp, alg, setPos, curPos, startTime, toffset);
-            
+            now = toc;
             if now > startTime + toffset
-                state = 0;
+                disp('Next state: Move Down');
+                state = ' ';
             end
 %         case MoveDown
 %             setPos = [xBall, yBall, zBall];
@@ -97,11 +98,17 @@ while 1
 %             Gripper(pp, OPEN);
 %             pause(.5);
         otherwise
-            disp('dOnE fUcKeD uP nOw');
+            if ball == 3
+                break;
+            end
+            ball = ball + 1;
+            
+            disp('All Done');
+            state = States.Start;
     end
     
     % Update 3D Model
-    UpdateStickModel;
+%     UpdateStickModel;
 end
 
 pp.shutdown();
