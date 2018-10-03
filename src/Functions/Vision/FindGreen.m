@@ -14,15 +14,15 @@ function [BW,maskedRGBImage] = FindGreen(RGB)
 I = rgb2hsv(RGB);
 
 % Define thresholds for channel 1 based on histogram settings
-channel1Min = 0.265;
-channel1Max = 0.462;
+channel1Min = 0.305;
+channel1Max = 0.478;
 
 % Define thresholds for channel 2 based on histogram settings
-channel2Min = 0.303;
+channel2Min = 0.319;
 channel2Max = 1.000;
 
 % Define thresholds for channel 3 based on histogram settings
-channel3Min = 0.431;
+channel3Min = 0.277;
 channel3Max = 1.000;
 
 % Create mask based on chosen histogram thresholds

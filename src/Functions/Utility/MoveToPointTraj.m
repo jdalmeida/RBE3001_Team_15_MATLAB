@@ -9,10 +9,10 @@ t0 = 0;
 tf = 0;
 q0 = 0;
 qf = 0;
-v0 = 20;   %this .5, .5 makes it run way smoother
-vf = 20;
-a0 = 0;
-af = 0;
+v0 = 30.0;   %this .5, .5 makes it run way smoother
+vf = v0;
+a0 = 1;
+af = 1;
 
 
 conds = [t0, tf, q0, qf, v0, vf, a0, af];
@@ -27,7 +27,7 @@ prevPos = fwkin(curPos(1), curPos(2), curPos(3));
 
 distance = abs(norm(prevPos) - norm(setPos));
 
-toffset = distance / 30.0;    %difference between t0 and tf
+toffset = distance / vf;    %difference between t0 and tf
 
 if toffset < 1.25
     toffset = 1.25;
@@ -63,6 +63,7 @@ while now < (startTime + toffset)
     
     % Update 3D Model
     UpdateStickModel;
+    pause(.1);
 end
 
 
