@@ -9,10 +9,12 @@ PID2=[.0025 0 .028];
 PID3=[.002 0 .02];
 PIDConfig(pp, PID1, PID2, PID3);
 
-movementAlg = 'trajectoryBlocking';
+alg = 'trajectoryBlocking';
 
-Move(pp, tWorkPos, movementAlg);
 Gripper(pp, OPEN);
+startTime = 0;
+toffset = 0;
+curPos = [0,0,0];
 
 %% Init Camera
 cam = webcam();
@@ -44,27 +46,32 @@ for i = 1:3
     end
     
     % Move to Work Position
-    Move(pp, tWorkPos, movementAlg);
+    setPos = tWorkPos;
+    Move(pp, alg, setPos, curPos, startTime, toffset);
     
     % Move to ball
-    Move(pp, [xBall, yBall, tWorkPos(3)], movementAlg);
+    setPos = [xBall, yBall, tWorkPos(3)];
+    Move(pp, alg, setPos, curPos, startTime, toffset);
     
-    Move(pp, [xBall, yBall, zBall], movementAlg);
+    setPos = [xBall, yBall, zBall];
+    Move(pp, alg, setPos, curPos, startTime, toffset);
     Gripper(pp, CLOSE);
     pause(.5)
     
     % Move to Work Position
-    Move(pp, tWorkPos, movementAlg);
+    setPos = tWorkPos;
+    Move(pp, alg, setPos, curPos, startTime, toffset);
     
     % Weigh ball
     
     % Drop off
-    Move(pp, [Pokeballs(i, 1), Pokeballs(i, 2), Pokeballs(i, 3) + 40], movementAlg);
+    setPos = [Pokeballs(i, 1), Pokeballs(i, 2), Pokeballs(i, 3) + 40];
+    Move(pp, alg, setPos, curPos, startTime, toffset);
     Gripper(pp, OPEN);
     pause(.5)
 end
 
 
-Move(pp, tWorkPos, movementAlg);
+Move(pp, tWorkPos, alg);
 
 pp.shutdown();

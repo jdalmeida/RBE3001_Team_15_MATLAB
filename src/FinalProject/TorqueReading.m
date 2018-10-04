@@ -16,7 +16,7 @@ count = 100;
 
 % force = zeros(5,3,'single');
 
-Setpoint(pp, 0, 35, -25);
+Setpoint(pp, jWorkPos(1), jWorkPos(2), jWorkPos(3));
 pause(1);
     
 k = 1;

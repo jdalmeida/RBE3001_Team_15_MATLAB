@@ -4,7 +4,6 @@ pp = PacketProcessor(myHIDSimplePacketComs);
 LivePlot3D([0,0,0], true);
 
 while 1
-    centroids  = FindCentroid();
     [pos, ~, torq]= GetStatus(pp);
     
     pos = TIC_TO_ANGLE * pos;

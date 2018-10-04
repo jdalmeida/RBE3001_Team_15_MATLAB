@@ -31,8 +31,11 @@ EMPTY = -1;
 COLORS = [BLUE, GREEN, YELLOW];
 
 %Weights
-LIGHT = 1;
-HEAVY = 2;
+LIGHT = 0;
+HEAVY = 3;
+
+YBOUND = 170;
+XBOUND = 300;
 
 %Drop Off 
 % light blue, green, yellow

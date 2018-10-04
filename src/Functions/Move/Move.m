@@ -1,4 +1,4 @@
-function Move(pp, algorithm,setPos, curPos, startTime, toffset)
+function Move(pp, algorithm, setPos, curPos, startTime, toffset)
 %MOVE takes in a taskspace position and the name of the algorithm to use
 %and uses that alg to move
 

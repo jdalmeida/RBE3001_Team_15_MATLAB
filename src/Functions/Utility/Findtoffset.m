@@ -14,5 +14,10 @@ if toffset < 1.5
     toffset = 1.5;
 end
 
+if toffset > 7
+    toffset = 7;
+end
+
+
 end
 

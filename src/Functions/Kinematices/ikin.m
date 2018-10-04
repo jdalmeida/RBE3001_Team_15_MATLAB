@@ -33,7 +33,7 @@ for i = 1:size(q)
     
     % If any angles are returned as imaginary, they are out of the range
     if ~isreal(q)
-        errormess = sprintf ('Joint %d angle values are not real values', i);
+        errormess = sprintf ('Joint %d angle values are not real values. Angle: %d %d %d', i, q(1), q(2), q(3));
         error(errormess);
     end
     

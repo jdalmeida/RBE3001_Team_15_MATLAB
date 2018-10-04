@@ -25,18 +25,17 @@ angles = zeros(1,3, 'single');
 % iterates through each of the axes to set conditions
 for axis = 1:3
     condsMat(axis, 1) = startTime;           %t0
-    condsMat(axis, 2) = startTime + 1.5; %tf
+    condsMat(axis, 2) = startTime + toffset; %tf
     condsMat(axis, 3) = startPos(axis);       %q0
     condsMat(axis, 4) = setPos(axis);        %qf
 end
 
-now = toc;       % update current time each loop iteration
+t = toc;       % update current time each loop iteration
 
 % generate the positions for each joint
 for j = 1:3
-    posn(j) = QuinticTraj(now, condsMat(j, :)); %this is a 1x3 that stores x y z of tip position
+    posn(j) = QuinticTraj(t, condsMat(j, :)); %this is a 1x3 that stores x y z of tip position
 end
-
 angles = ikin(posn);
 
 % Go to the setpoint based on the equation

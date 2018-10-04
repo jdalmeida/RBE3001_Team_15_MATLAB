@@ -24,6 +24,11 @@ for i=1:numel(fields)
     y = myColor(:, 2) * 1.37 +2.12;
     z = 0;
     
+    if abs(y) >= YBOUND || x >= XBOUND
+        ballcolor = EMPTY;
+        ballInfo(i, :) = [0,0,0, ballcolor, HEAVY];
+    end
+    
 %     set(scatterHandles(i).handle, 'xdata', x, 'ydata', y,'zdata', z);
     ballInfo(i, :) = [x, y, z, ballcolor, HEAVY];
 end
