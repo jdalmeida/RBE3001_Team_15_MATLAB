@@ -30,7 +30,7 @@ ball = 1;
 camOn = 1;
 grabbed = 0;
 
-counts = 100;
+counts = 5;
 index = 1;
 total = [0, 0, 0];
 done=false;
@@ -139,17 +139,20 @@ while ~done
             end
             
         case 'SortByWeight'
-            [pos, ~, torq] = GetStatus(pp);
+            [~, ~, torq] = GetStatus(pp);
             total = total + torq * 4096;
-            if index > count
+            index = index + 1;
+            if index > counts
                 state = States.MoveToDropOff;
-                force = total / count;
-                n = norm(force);
-                if n > 3.7e+03
-                    weightBall = HEAVY;
-                else
-                    weightBall = LIGHT;
-                end
+                force = total / counts;
+                actualTorque = RawToTorque(force);
+                tipForce = statics3001(jWorkPos, actualTorque);
+%                 if tipForce(2) > .2
+%                     weightBall = HEAVY;
+%                 else
+%                     weightBall = LIGHT;
+%                 end
+                weightBall = LIGHT;
                 curPos = setPos;
                 setPos = [Pokeballs(colorBall + weightBall, 1), Pokeballs(colorBall + weightBall, 2), Pokeballs(colorBall + weightBall, 3) + 40];
                 toffset = Findtoffset(curPos, setPos, setVel);

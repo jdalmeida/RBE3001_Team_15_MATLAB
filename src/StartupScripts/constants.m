@@ -34,7 +34,7 @@ COLORS = [BLUE, GREEN, YELLOW];
 LIGHT = 0;
 HEAVY = 3;
 
-YBOUND = 170;
+YBOUND = 150;
 XBOUND = 300;
 
 %Drop Off 
@@ -45,7 +45,10 @@ XBOUND = 300;
 %     173, 206, -13];
 Pokeballs = [36, 220, 22;
     120, 200, 23;
-    210, 210, 23];
+    210, 210, 23;
+    36, -220, 22;
+    120, -200, 23;
+    210, -210, 23];
 
 jWorkPos = [0, 25, -30];
 tWorkPos = fwkin(jWorkPos(1), jWorkPos(2), jWorkPos(3));
