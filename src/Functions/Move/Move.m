@@ -7,6 +7,8 @@ switch algorithm
         MoveToPointTrajBlocking(pp, setPos);
     case 'trajectory'
         MoveTraj(pp, setPos, curPos, startTime, toffset);
+    case 'ivel'
+        MoveiVel(pp, setPos, curPos, startTime, toffset);
     otherwise
         disp('basic bitch shit');
         MoveToPoint(pp, setPos);

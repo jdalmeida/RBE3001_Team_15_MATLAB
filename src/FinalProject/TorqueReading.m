@@ -12,11 +12,12 @@ Gripper(pp, 0);
 
 tipForce = [0,0,0];
 actualTorque = [0,0,0];
-count = 10;
+count = 100;
 
 % force = zeros(5,3,'single');
 
 Setpoint(pp, jWorkPos(1), jWorkPos(2), jWorkPos(3));
+% Setpoint(pp, 0, 90, 0);
 pause(1);
 
 k = 1;
@@ -28,16 +29,13 @@ while 1
     
     for j = 1:count
         [~, ~, torq] = GetStatus(pp);
-        torq = torq * 4096;
-        
-        %         totalF = totalF + tipForce';
-        total = total + torq;
+        total = total + torq * 4096;
         pause(.01);
     end
     
     force = total / count;
     
-    disp('Norm Raw');
+    disp('Raw');
     disp(force);
     
     actualTorque=RawToTorque(force);

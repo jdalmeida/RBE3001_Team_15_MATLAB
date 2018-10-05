@@ -18,7 +18,7 @@ pyellow.handle = scatter3(0,0,0, scale,'MarkerFaceColor',[1 0.843137264251709 0]
     'MarkerEdgeColor',[1 0.843137264251709 0]);
 scatterHandles = [pblue, pgreen, pyellow];
 
-alg = 'trajectory';
+alg = 'ivel';
 
 Gripper(pp, OPEN);
 
@@ -30,12 +30,13 @@ ball = 1;
 camOn = 1;
 grabbed = 0;
 
-counts = 5;
-index = 1;
+counts = 10;
+index = 0;
 total = [0, 0, 0];
 done=false;
+graph = true;
 
-setVel = 50;
+setVel = 20;
 
 curPos = GetCurrentPos(pp);
 setPos = tWorkPos;
@@ -135,6 +136,7 @@ while ~done
                 disp('Next state: Sort By Weight');
                 index = 1;
                 total = [0, 0, 0];
+                graph = false;
                 state = States.SortByWeight;
             end
             
@@ -147,15 +149,18 @@ while ~done
                 force = total / counts;
                 actualTorque = RawToTorque(force);
                 tipForce = statics3001(jWorkPos, actualTorque);
-%                 if tipForce(2) > .2
-%                     weightBall = HEAVY;
-%                 else
-%                     weightBall = LIGHT;
-%                 end
-                weightBall = LIGHT;
+                if tipForce(2) > .2
+                    weightBall = HEAVY;
+                else
+                    weightBall = LIGHT;
+                end
+                disp('Weight');
+                disp(weightBall);
+                disp(tipForce(2));
                 curPos = setPos;
                 setPos = [Pokeballs(colorBall + weightBall, 1), Pokeballs(colorBall + weightBall, 2), Pokeballs(colorBall + weightBall, 3) + 40];
                 toffset = Findtoffset(curPos, setPos, setVel);
+                graph = true;
                 startTime = toc;
             end
             
@@ -188,35 +193,37 @@ while ~done
             state = States.Start;
     end
     
-    % Update 3D Model
-    [pos, ~, torq]= GetStatus(pp);
-    
-    pos = TIC_TO_ANGLE * pos;
-    actualTorque=RawToTorque(torq);
-    
-    tipForce=statics3001(pos, actualTorque);
-    
-    endPos = LivePlot3D(pos, false, false, tipForce);
-    
-    % Update Ball Plots
-    for i = 1:3
-        x = ballInfo(i, 1);
-        y = ballInfo(i, 2);
-        z = ballInfo(i, 3);
+    if graph
+        % Update 3D Model
+        [pos, ~, torq]= GetStatus(pp);
         
-        if ballInfo(i,4) == -1
-            x = -1000;
-            y = -1000;
-            z = -1000;
+        pos = TIC_TO_ANGLE * pos;
+        actualTorque=RawToTorque(torq);
+        
+        tipForce=statics3001(pos, actualTorque);
+        
+        endPos = LivePlot3D(pos, false, false, tipForce);
+        
+        % Update Ball Plots
+        for i = 1:3
+            x = ballInfo(i, 1);
+            y = ballInfo(i, 2);
+            z = ballInfo(i, 3);
+            
+            if ballInfo(i,4) == -1
+                x = -1000;
+                y = -1000;
+                z = -1000;
+            end
+            
+            if grabbed == 1 && ballInfo(i, 4) == colorBall
+                x = endPos(1);
+                y = endPos(2);
+                z = endPos(3);
+            end
+            
+            set(scatterHandles(i).handle, 'xdata', x, 'ydata', y,'zdata', z);
         end
-        
-        if grabbed == 1 && ballInfo(i, 4) == colorBall
-            x = endPos(1);
-            y = endPos(2);
-            z = endPos(3);
-        end
-        
-        set(scatterHandles(i).handle, 'xdata', x, 'ydata', y,'zdata', z);
     end
 end
 
