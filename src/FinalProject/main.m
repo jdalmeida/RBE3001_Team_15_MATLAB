@@ -241,7 +241,7 @@ while 1
             y = ballInfo(i, 2);
             z = ballInfo(i, 3);
             
-            if ballInfo(i,4) == -1
+            if ballInfo(i,4) == EMPTY
                 x = farAway(1);
                 y = farAway(2);
                 z = farAway(3);
