@@ -31,7 +31,6 @@ forceVector.handle = quiver3(0,0,0,0.0,0.0,0.0, ...
 % Change which algorithm to use for movement
 % 'trajectory' 'ivel'
 alg = 'trajectory';
-
 disp('Initializing Positions');
 Setpoint(pp, 0, 0, 0);
 Gripper(pp, OPEN);
@@ -63,6 +62,11 @@ setPos = tWorkPos;
 state = States.Start;
 toffset = Findtoffset(curPos, setPos, setVel);
 
+%weighing setup
+weighCounter=1;
+weighPoints=[90.36, 0, -11.6008;
+             146, 0, 225.36;
+             169, 0, 310];
 
 % timer
 disp('Beginning Loop');
@@ -152,14 +156,22 @@ while 1
             end
             
         case 'MoveToWeigh'
-            Move(pp, alg, setPos, curPos, startTime, toffset);
-            now = toc;
-            if now > startTime + toffset
-                disp('Next state: Sort By Weight');
+            [weighPointCount, ~]=size(weighPoints);
+            if weighCounter<=weighPointCount
+                Move(pp, alg, weighPoints(weighCounter), curPos, startTime, toffset);
+                now = toc;
+                if now > startTime + toffset
+                    curPos=weighPoints(weighCounter);
+                    weighCounter=weighCounter+1;
+                end
+            else
+                weighCounter=1; %resets the weigh counter for the next time
+                curPos=weighPoints(weighPointCount);
                 index = 1;
                 total = [0, 0, 0];
                 graph = false;
                 state = States.SortByWeight;
+                disp('Sorting by Weight');
             end
             
         case 'SortByWeight'
