@@ -108,8 +108,7 @@ for i = 0:3
         
         
         quiver = handleGetter.getVelArrowHandle();
-        set(quiver.handle, 'XData', x, 'YData', y, 'ZData', z, 'UData', u, ...
-            'VData', v, 'WData', w);
+        quiver3(0,0,0,0,0,0);
         
         % Adds to CSV
         data = [now tipPos jPos];

@@ -21,7 +21,12 @@ pyellow.handle = scatter3(farAway(1), farAway(2), farAway(3), scale,'MarkerFaceC
 scatterHandles = [pblue, pgreen, pyellow];
 
 % forve vector
-
+forceVector.handle = quiver3(0,0,0,0.0,0.0,0.0, ...
+                    'MarkerFaceColor',[0 0 0],...
+                    'MarkerEdgeColor',[0 0 0],...
+                    'LineWidth',2,...
+                    'AutoScaleFactor', 1,...
+                    'MaxHeadSize', .5);
 
 % Change which algorithm to use for movement
 % 'trajectory' 'ivel'
@@ -41,6 +46,7 @@ ball = 1;
 counts = 100;
 index = 0;
 total = [0, 0, 0];
+tipForce = zeros(1,3, 'double');
 
 % flags
 done=false; % if there are any balls avaliable
@@ -221,6 +227,13 @@ while 1
         tipForce=statics3001(pos, actualTorque);
         
         endPos = LivePlot3D(pos, false, false, tipForce);
+        tipForce = double(tipForce);
+        u = tipForce(1);
+        v = tipForce(2);
+        w = tipForce(3);
+        
+        set(forceVector.handle, 'XData', endPos(1), 'YData', endPos(2), 'ZData', endPos(3),...
+            'UData', u, 'VData', v, 'WData', w);
         
         % Update Ball Plots
         for i = 1:3
@@ -228,7 +241,7 @@ while 1
             y = ballInfo(i, 2);
             z = ballInfo(i, 3);
             
-            if ballInfo(i,4) == -1
+            if ballInfo(i,4) == EMPTY
                 x = farAway(1);
                 y = farAway(2);
                 z = farAway(3);
@@ -242,6 +255,7 @@ while 1
             
             set(scatterHandles(i).handle, 'xdata', x, 'ydata', y,'zdata', z);
         end
+        
     end
 end
 
