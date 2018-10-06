@@ -8,8 +8,8 @@ function [torq] = RawToTorque(raw)
 % % scale = [0.0436, -9.7030e-07, -3.9379e-05];
 
 % Given values
-offset = [1918.4,1918.4, 1918.4];
-scale = [178.5, 178.5, 178.5]/1000;
+offset = [2.285, 1.64, 2.33] * 1000;
+scale = [178.5, 178.5, -0.9];
 
 
 %% try 2
