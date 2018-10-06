@@ -10,7 +10,6 @@ switch algorithm
     case 'ivel'
         MoveiVel(pp, setPos, curPos, startTime, toffset);
     otherwise
-        disp('basic bitch shit');
         MoveToPoint(pp, setPos);
 end
 

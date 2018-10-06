@@ -35,14 +35,14 @@ while 1
     
     force = total / count;
     
-    disp('Raw');
-    disp(force);
+    disp('Joint 2 Torque');
+    disp(force(2));
     
     actualTorque=RawToTorque(force);
     
     tipForce=statics3001(jWorkPos, actualTorque);
-    disp('Tip Force');
-    disp(tipForce');
+    disp('Z Force');
+    disp(tipForce(3));
     
     
 %     if n < 3.93e+03

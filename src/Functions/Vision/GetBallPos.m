@@ -1,10 +1,12 @@
 function [ballInfo] = GetBallPos(cam)
 %GETBALLPOS Summary of this function goes here
 %   Detailed explanation goes here
-constants; 
+constants;
 
 centroids = FindCentroid(cam);
 fields = fieldnames(centroids);
+
+ballInfo = zeros(3, 5, 'double');
 
 % Loop to iterate through each centroids point to generate the graph
 for i=1:numel(fields)
@@ -12,6 +14,7 @@ for i=1:numel(fields)
     
     ballcolor = COLORS(i);
     
+    % if none of that color, set to EMPTY
     if isempty(myColor)
         ballcolor = EMPTY;
         ballInfo(i, :) = [0,0,0, ballcolor, HEAVY];
@@ -29,7 +32,7 @@ for i=1:numel(fields)
         ballInfo(i, :) = [0,0,0, ballcolor, HEAVY];
     end
     
-%     set(scatterHandles(i).handle, 'xdata', x, 'ydata', y,'zdata', z);
+    %     set(scatterHandles(i).handle, 'xdata', x, 'ydata', y,'zdata', z);
     ballInfo(i, :) = [x, y, z, ballcolor, HEAVY];
 end
 

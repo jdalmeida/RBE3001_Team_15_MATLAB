@@ -9,7 +9,7 @@ PID2=[.0025 0 .028];
 PID3=[.002 0 .02];
 PIDConfig(pp, PID1, PID2, PID3);
 
-alg = 'trajectoryBlocking';
+alg = '';
 
 Gripper(pp, OPEN);
 startTime = 0;

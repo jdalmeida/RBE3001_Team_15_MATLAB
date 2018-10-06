@@ -8,47 +8,62 @@ PID2=[.0025 0 .028];
 PID3=[.002 0 .02];
 PIDConfig(pp, PID1, PID2, PID3);
 
+farAway = [-1000, -1000, -1000];
+
 % plots for the ball markers
 scale = 100;
-pblue.handle = scatter3(0,0,0, scale, 'MarkerFaceColor',[0 0.749019622802734 0.749019622802734],...
+pblue.handle = scatter3(farAway(1), farAway(2), farAway(3), scale, 'MarkerFaceColor',[0 0.749019622802734 0.749019622802734],...
     'MarkerEdgeColor',[0 0.749019622802734 0.749019622802734]);
-pgreen.handle = scatter3(0,0,0, scale,'MarkerFaceColor',[0.466666668653488 0.674509823322296 0.18823529779911],...
+pgreen.handle = scatter3(farAway(1), farAway(2), farAway(3), scale,'MarkerFaceColor',[0.466666668653488 0.674509823322296 0.18823529779911],...
     'MarkerEdgeColor',[0.466666668653488 0.674509823322296 0.18823529779911]);
-pyellow.handle = scatter3(0,0,0, scale,'MarkerFaceColor',[1 0.843137264251709 0],...
+pyellow.handle = scatter3(farAway(1), farAway(2), farAway(3), scale,'MarkerFaceColor',[1 0.843137264251709 0],...
     'MarkerEdgeColor',[1 0.843137264251709 0]);
 scatterHandles = [pblue, pgreen, pyellow];
 
-alg = 'ivel';
+% forve vector
 
+
+% Change which algorithm to use for movement
+% 'trajectory' 'ivel'
+alg = 'trajectory';
+
+disp('Initializing Positions');
+Setpoint(pp, 0, 0, 0);
 Gripper(pp, OPEN);
 
 %% Init Camera
 cam = webcam();
 
-% Initial Declarations
+%% Initial Declarations
 ball = 1;
-camOn = 1;
-grabbed = 0;
 
-counts = 10;
+% for avgeraging the torque
+counts = 100;
 index = 0;
 total = [0, 0, 0];
-done=false;
-graph = true;
 
+% flags
+done=false; % if there are any balls avaliable
+graph = true; % update the graph
+camOn = true; % poll the camera
+grabbed = false; % if a ball is grabbed
+
+numberOfBalls = 0;
 setVel = 20;
 
+% moving 
 curPos = GetCurrentPos(pp);
 setPos = tWorkPos;
 state = States.Start;
 toffset = Findtoffset(curPos, setPos, setVel);
-% toffset = 1.5;
 
+
+% timer
+disp('Beginning Loop');
 tic;
 startTime = toc;
-
 %% Beginning of Loop
-while ~done
+while 1
     % Continuously poll camera for ball information
     if camOn
         ball = 1;
@@ -57,8 +72,9 @@ while ~done
         
         currBall = ballInfo(ball, :);
         
-        % if current color does not exist, move on to the next color
+        % if current color does not exist, iterate to the next color
         % if none exist, chill until one appears
+            
         if currBall(4) == -1
             ball = 2;
             currBall = ballInfo(ball, :);
@@ -66,7 +82,7 @@ while ~done
                 ball = 3;
                 currBall = ballInfo(ball, :);
                 if currBall(4) == -1
-                    done=true;
+%                     done=true;
                     continue;
                 end
             end
@@ -104,7 +120,7 @@ while ~done
                 toffset = Findtoffset(curPos, setPos, setVel);
                 state = States.MoveDown;
                 startTime = toc;
-                camOn = 0;
+                camOn = false;
             end
             
         case 'MoveDown'
@@ -122,7 +138,7 @@ while ~done
             now = toc;
             if now > startTime + .5
                 disp('Next state: Move To Weigh');
-                grabbed = 1;
+                grabbed = true;
                 state = States.MoveToWeigh;
                 setPos = tWorkPos;
                 toffset = Findtoffset(curPos, setPos, setVel);
@@ -146,17 +162,19 @@ while ~done
             index = index + 1;
             if index > counts
                 state = States.MoveToDropOff;
+                
                 force = total / counts;
                 actualTorque = RawToTorque(force);
                 tipForce = statics3001(jWorkPos, actualTorque);
-                if tipForce(2) > .2
+                if abs(tipForce(3)) > 17
                     weightBall = HEAVY;
                 else
                     weightBall = LIGHT;
                 end
                 disp('Weight');
                 disp(weightBall);
-                disp(tipForce(2));
+                disp(tipForce(3));
+                
                 curPos = setPos;
                 setPos = [Pokeballs(colorBall + weightBall, 1), Pokeballs(colorBall + weightBall, 2), Pokeballs(colorBall + weightBall, 3) + 40];
                 toffset = Findtoffset(curPos, setPos, setVel);
@@ -178,17 +196,17 @@ while ~done
             now = toc;
             if now > startTime + .5
                 disp('Next state: Start');
-                grabbed = 0;
+                grabbed = false;
                 state = States.Start;
                 curPos = setPos;
                 setPos = tWorkPos;
                 toffset = Findtoffset(curPos, setPos, setVel);
                 startTime = toc;
-                camOn = 1;
+                camOn = true;
             end
             
         otherwise
-            camOn = 1;
+            camOn = true;
             disp('All Done');
             state = States.Start;
     end
@@ -211,12 +229,12 @@ while ~done
             z = ballInfo(i, 3);
             
             if ballInfo(i,4) == -1
-                x = -1000;
-                y = -1000;
-                z = -1000;
+                x = farAway(1);
+                y = farAway(2);
+                z = farAway(3);
             end
             
-            if grabbed == 1 && ballInfo(i, 4) == colorBall
+            if grabbed && ballInfo(i, 4) == colorBall
                 x = endPos(1);
                 y = endPos(2);
                 z = endPos(3);
