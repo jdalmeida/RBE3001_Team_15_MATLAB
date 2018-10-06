@@ -53,7 +53,7 @@ Pokeballs = [36, 220, 22;
 jWorkPos = [0, 40, -25];
 tWorkPos = fwkin(jWorkPos(1), jWorkPos(2), jWorkPos(3));
 
-jweighPos = [0, 0, -30;
-             0, 90, -30;
-             0, 90, 0];
+weighPoints=[90.36, 0, -11.6008;
+             146, 0, 225.36;
+             169, 0, 310];
          

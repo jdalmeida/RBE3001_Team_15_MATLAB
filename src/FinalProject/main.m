@@ -64,9 +64,6 @@ toffset = Findtoffset(curPos, setPos, setVel);
 
 %weighing setup
 weighCounter=1;
-weighPoints=[90.36, 0, -11.6008;
-             146, 0, 225.36;
-             169, 0, 310];
 
 % timer
 disp('Beginning Loop');
@@ -150,28 +147,28 @@ while 1
                 disp('Next state: Move To Weigh');
                 grabbed = true;
                 state = States.MoveToWeigh;
-                setPos = fwkin(0, 0, 90);
-                toffset = Findtoffset(curPos, setPos, setVel);
+                toffset = 1.5;
                 startTime = toc;
             end
             
         case 'MoveToWeigh'
             [weighPointCount, ~]=size(weighPoints);
             if weighCounter<=weighPointCount
-                Move(pp, alg, weighPoints(weighCounter), curPos, startTime, toffset);
+                Move(pp, alg, weighPoints(weighCounter, :), curPos, startTime, toffset);
                 now = toc;
                 if now > startTime + toffset
-                    curPos=weighPoints(weighCounter);
+                    curPos=weighPoints(weighCounter, :);
+                    startTime = toc;
                     weighCounter=weighCounter+1;
                 end
             else
                 weighCounter=1; %resets the weigh counter for the next time
-                curPos=weighPoints(weighPointCount);
+                curPos=weighPoints(weighPointCount, :);
                 index = 1;
                 total = [0, 0, 0];
                 graph = false;
                 state = States.SortByWeight;
-                disp('Sorting by Weight');
+                disp('Next State" Sorting by Weight');
             end
             
         case 'SortByWeight'
@@ -183,20 +180,23 @@ while 1
                 
                 force = total / counts;
                 actualTorque = RawToTorque(force);
-                tipForce = statics3001(jWorkPos, actualTorque);
-                if abs(force(3)) < 3.4e+03
+                tipForce = statics3001([0,90,0], actualTorque) * 1000;
+                if tipForce(3) > 100
                     weightBall = HEAVY;
                 else
                     weightBall = LIGHT;
                 end
+                
                 disp('Weight');
                 disp(weightBall);
                 disp(tipForce(3));
                 
-                curPos = setPos;
+                curPos = weighPoints(3,:);
                 setPos = [Pokeballs(colorBall + weightBall, 1), Pokeballs(colorBall + weightBall, 2), Pokeballs(colorBall + weightBall, 3) + 40];
                 toffset = Findtoffset(curPos, setPos, setVel);
                 graph = true;
+                
+                disp('Next State: Move To Pokeballs');
                 startTime = toc;
             end
             
