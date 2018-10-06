@@ -146,7 +146,7 @@ while 1
                 disp('Next state: Move To Weigh');
                 grabbed = true;
                 state = States.MoveToWeigh;
-                setPos = tWorkPos;
+                setPos = fwkin(0, 0, 90);
                 toffset = Findtoffset(curPos, setPos, setVel);
                 startTime = toc;
             end
@@ -172,7 +172,7 @@ while 1
                 force = total / counts;
                 actualTorque = RawToTorque(force);
                 tipForce = statics3001(jWorkPos, actualTorque);
-                if abs(tipForce(3)) > 17
+                if abs(force(3)) < 3.4e+03
                     weightBall = HEAVY;
                 else
                     weightBall = LIGHT;

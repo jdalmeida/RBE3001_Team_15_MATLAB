@@ -17,11 +17,11 @@ count = 100;
 % force = zeros(5,3,'single');
 
 % Setpoint(pp, jWorkPos(1), jWorkPos(2), jWorkPos(3));
-Setpoint(pp, 0, 0, -30);
+Setpoint(pp, 0, 0, 90);
 pause(1);
-Setpoint(pp, 0, 90, -30);
-pause(2);
-Setpoint(pp, 0, 90, 0);
+% Setpoint(pp, 0, 90, -30);
+% pause(2);
+% Setpoint(pp, 0, 90, 0);
 
 
 k = 1;
@@ -47,13 +47,6 @@ while 1
     tipForce=statics3001(jWorkPos, actualTorque);
     disp('Z Force');
     disp(tipForce');
-    
-    
-%     if n < 3.93e+03
-%         disp('light');
-%     else
-%         disp('heavy');
-%     end
     
     waitforbuttonpress;
 end
