@@ -4,6 +4,7 @@ ANGLE_TO_TIC = 4096.0/360.0;
 TIC_TO_RAD=2*pi/4096;
 RAD_TO_TIC=4096/2*pi;
 
+OPEN = 1;
 %% Server ID Library
 
 global PID_ID
@@ -23,10 +24,6 @@ PIDCONFIG_ID = 65;           % update pid values for each joint
 % rows = joint
 global jointlimits
 jointlimits = [-90 90; -20 120; -40 230];
-
-%% Gripper Position Constants
-OPEN=1;
-CLOSE=.1;
 
 %% Ball Info
 

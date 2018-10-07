@@ -3,9 +3,6 @@ init;
 pp = PacketProcessor(myHIDSimplePacketComs);
 LivePlot3D([0,0,0], true, false, [0,0,0]);
 
-global tester
-tester = 5;
-
 PID1=[.0025 0 0];
 PID2=[.0025 0 .028];
 PID3=[.002 0 .02];
@@ -25,18 +22,17 @@ scatterHandles = [pblue, pgreen, pyellow];
 
 % forve vector
 forceVector.handle = quiver3(0,0,0,0.0,0.0,0.0, ...
-                    'MarkerFaceColor',[0 0 0],...
-                    'MarkerEdgeColor',[0 0 0],...
-                    'LineWidth',2,...
-                    'AutoScaleFactor', 1,...
-                    'MaxHeadSize', .5);
+    'MarkerFaceColor',[0 0 0],...
+    'MarkerEdgeColor',[0 0 0],...
+    'LineWidth',2,...
+    'AutoScaleFactor', 1,...
+    'MaxHeadSize', .5);
 
 % Change which algorithm to use for movement
 % 'trajectory' 'ivel'
-alg = 'trajectory';
 disp('Initializing Positions');
 Setpoint(pp, 0, 0, 0);
-Gripper(pp, OPEN);
+Gripper(pp, 1);
 
 %% Init Camera
 cam = webcam();
@@ -56,11 +52,11 @@ graph = true; % update the graph
 camOn = true; % poll the camera
 grabbed = false; % if a ball is grabbed
 
-numberOfBalls = 0;
 setVel = 20;
+currentNumberOfBalls = 3;
 
-% moving 
-curPos = GetCurrentPos(pp);
+% moving
+curPos = [0,0,0];
 setPos = tWorkPos;
 state = States.Start;
 toffset = Findtoffset(curPos, setPos, setVel);
@@ -68,24 +64,35 @@ toffset = Findtoffset(curPos, setPos, setVel);
 %weighing setup
 weighCounter=1;
 
+%% Initialize Sounds
+
+%% Choose Initializations
+alg = 'trajectory';     % which alg to use to move
+usingPokemon = true;        % using pokemon figures
+
+if usingPokemon
+    GripperClosed = [.1, .1, .1];
+else
+    GripperClosed = [.5, .3, .1];
+end
+
 % timer
 disp('Beginning Loop');
 tic;
-startTime = toc;
+startTime = toc + .421; % add offset for first run through
 %% Beginning of Loop
 while 1
-%     startLoop = toc;
     % Continuously poll camera for ball information
     if camOn
         ball = 1;
         
         ballInfo = GetBallPos(cam);
         
+        
         currBall = ballInfo(ball, :);
         
         % if current color does not exist, iterate to the next color
         % if none exist, chill until one appears
-            
         if currBall(4) == -1
             ball = 2;
             currBall = ballInfo(ball, :);
@@ -93,8 +100,8 @@ while 1
                 ball = 3;
                 currBall = ballInfo(ball, :);
                 if currBall(4) == -1
-%                     done=true;
-                    break;
+                    %                     done=true;
+                    continue;
                 end
             end
         end
@@ -104,12 +111,14 @@ while 1
         zBall = currBall(3);
         colorBall = currBall(4);
         weightBall = currBall(5);
+        
+        currentNumberOfBalls = 4 - ball;
     end
     
     %% State Machine
     switch state
         case 'Start'
-            Move(pp, alg, setPos, curPos, startTime, toffset);
+            Move(pp, alg, tWorkPos, [0,0,0], startTime, toffset);
             now = toc;
             if now > startTime + toffset
                 disp('Next state: Move Above Ball');
@@ -145,7 +154,7 @@ while 1
             end
             
         case 'GrabBall'
-            Gripper(pp, CLOSE);
+            Gripper(pp, GripperClosed(colorBall));
             now = toc;
             if now > startTime + .5
                 disp('Next state: Move To Weigh');
@@ -270,11 +279,6 @@ while 1
         end
         
     end
-    
-%     endLoop = toc;
-%     loopTime = (endLoop- startLoop) * 1000;
-%     disp('Loop Time (ms)');
-%     disp(loopTime);
 end
 
 pp.shutdown();
