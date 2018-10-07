@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pixels>
    <pixel>
-      <m>104</m>
+      <m>113</m>
       <n>153</n>
    </pixel>
    <pixel>
-      <m>470</m>
-      <n>156</n>
+      <m>480</m>
+      <n>159</n>
    </pixel>
    <pixel>
-      <m>280</m>
-      <n>250</n>
+      <m>295</m>
+      <n>270</n>
    </pixel>
    <pixel>
-      <m>35</m>
-      <n>430</n>
+      <m>47</m>
+      <n>432</n>
    </pixel>
    <pixel>
-      <m>526</m>
-      <n>433</n>
+      <m>538</m>
+      <n>438</n>
    </pixel>
 </pixels>

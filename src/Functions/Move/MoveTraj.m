@@ -2,8 +2,6 @@ function MoveTraj(pp, setPos, startPos, startTime, toffset)
 %MOVETRAJ takes setpoint and moves arm there
 
 %% Generate Conditions
-constants;
-
 % makes sure pos's are vertical arrays
 setPos = reshape(setPos, [3,1]);
 startPos = reshape(startPos, [3,1]);

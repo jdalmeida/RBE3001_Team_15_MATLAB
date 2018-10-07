@@ -3,7 +3,6 @@ function endPos = LivePlot3D(q, start, path, f)
 %% Initialize the figure 
 % Takes the joint positions in degrees, bool start and bool path and gives end efector position
 pointCSV = 'pathPoints.csv';
-constants;
 if start
     axes1 = axes('Parent',figure);
     hold(axes1,'on');

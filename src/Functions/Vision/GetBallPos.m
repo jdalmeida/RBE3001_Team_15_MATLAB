@@ -23,16 +23,13 @@ for i=1:numel(fields)
     
     [rows, ~] = size(myColor);
     zPos = zeros(rows, 1, 'single');
-    x = myColor(:, 1) * 2.34 - 236;
-    y = myColor(:, 2) * 1.37 + 5;
+    x = myColor(:, 1) * .941 + 199;
+    y = myColor(:, 2) * .822 + 1.26;
     z = 0;
     
     ballInfo(i, :) = [x, y, z, ballcolor, HEAVY];
     
-    if abs(y) >= YBOUND || x >= XBOUND
-        disp('color too big');
-        disp(ballcolor);
-        
+    if abs(y) >= YBOUND || x >= XBOUND        
         ballcolor = EMPTY;
         ballInfo(i, :) = [0,0,0, ballcolor, HEAVY];
     end

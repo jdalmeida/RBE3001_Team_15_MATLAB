@@ -1,6 +1,6 @@
 function [q] = ikin(pos)
 %% ikin input position as a 1x3 points and returns joint angles in a 1x3
-constants;
+global jointlimits
 
 L1 = 135;
 L2 = 175;

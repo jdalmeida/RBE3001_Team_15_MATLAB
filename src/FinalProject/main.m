@@ -3,6 +3,9 @@ init;
 pp = PacketProcessor(myHIDSimplePacketComs);
 LivePlot3D([0,0,0], true, false, [0,0,0]);
 
+global tester
+tester = 5;
+
 PID1=[.0025 0 0];
 PID2=[.0025 0 .028];
 PID3=[.002 0 .02];
@@ -71,6 +74,7 @@ tic;
 startTime = toc;
 %% Beginning of Loop
 while 1
+%     startLoop = toc;
     % Continuously poll camera for ball information
     if camOn
         ball = 1;
@@ -90,7 +94,7 @@ while 1
                 currBall = ballInfo(ball, :);
                 if currBall(4) == -1
 %                     done=true;
-                    continue;
+                    break;
                 end
             end
         end
@@ -181,7 +185,7 @@ while 1
                 force = total / counts;
                 actualTorque = RawToTorque(force);
                 tipForce = statics3001([0,90,0], actualTorque) * 1000;
-                if tipForce(3) > 100
+                if tipForce(3) > 60
                     weightBall = HEAVY;
                 else
                     weightBall = LIGHT;
@@ -231,12 +235,9 @@ while 1
     
     if graph
         % Update 3D Model
-        [pos, ~, torq]= GetStatus(pp);
+        [pos, ~, ~]= GetStatus(pp);
         
         pos = TIC_TO_ANGLE * pos;
-        actualTorque=RawToTorque(torq);
-        
-        tipForce=statics3001(pos, actualTorque);
         
         endPos = LivePlot3D(pos, false, false, tipForce);
         tipForce = double(tipForce);
@@ -269,6 +270,11 @@ while 1
         end
         
     end
+    
+%     endLoop = toc;
+%     loopTime = (endLoop- startLoop) * 1000;
+%     disp('Loop Time (ms)');
+%     disp(loopTime);
 end
 
 pp.shutdown();

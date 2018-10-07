@@ -5,15 +5,23 @@ TIC_TO_RAD=2*pi/4096;
 RAD_TO_TIC=4096/2*pi;
 
 %% Server ID Library
+
+global PID_ID
 PID_ID = 37;                 % give robot a set point
+global PROTOCOL_ID
+
 PROTOCOL_ID = 36;            % receive status message
 CALIBRATION_ID = 35;         % update home position
+
+global GRIPPER_ID
 GRIPPER_ID = 34;             % send values to gripper servo
+
 PIDCONFIG_ID = 65;           % update pid values for each joint
 
 %% Joint Limits in degrees
 % cols = min max
 % rows = joint
+global jointlimits
 jointlimits = [-90 90; -20 120; -40 230];
 
 %% Gripper Position Constants
@@ -28,7 +36,7 @@ GREEN = 2;
 YELLOW = 3;
 EMPTY = -1;
 
-COLORS = [BLUE, GREEN, YELLOW];
+COLORS = [1, 2, 3];
 
 %Weights
 LIGHT = 0;
@@ -51,15 +59,11 @@ Pokeballs = [36, 220, 22;
     210, -210, 23];
 
 jWorkPos = [0, 40, -25];
-tWorkPos = fwkin(jWorkPos(1), jWorkPos(2), jWorkPos(3));
+tWorkPos = [177.8707, 0, 83.9759];
 
 jweighPoints = [0, 10, -30;
                 0, 90, -30;
                 0, 90, 0];
-
-twp1 = fwkin(jweighPoints(1, 1), jweighPoints(1, 2), jweighPoints(1, 3));
-twp2 = fwkin(jweighPoints(2, 1), jweighPoints(2, 2), jweighPoints(2, 3));
-twp3 = fwkin(jweighPoints(3, 1), jweighPoints(3, 2), jweighPoints(3, 3));
 
 weighPoints=[90.36, 0, -11.6008;
              146, 0, 225.36;
