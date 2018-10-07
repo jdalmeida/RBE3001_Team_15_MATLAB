@@ -34,7 +34,7 @@ COLORS = [BLUE, GREEN, YELLOW];
 LIGHT = 0;
 HEAVY = 3;
 
-YBOUND = 140;
+YBOUND = 160;
 XBOUND = 300;
 
 %Drop Off 
@@ -52,6 +52,14 @@ Pokeballs = [36, 220, 22;
 
 jWorkPos = [0, 40, -25];
 tWorkPos = fwkin(jWorkPos(1), jWorkPos(2), jWorkPos(3));
+
+jweighPoints = [0, 10, -30;
+                0, 90, -30;
+                0, 90, 0];
+
+twp1 = fwkin(jweighPoints(1, 1), jweighPoints(1, 2), jweighPoints(1, 3));
+twp2 = fwkin(jweighPoints(2, 1), jweighPoints(2, 2), jweighPoints(2, 3));
+twp3 = fwkin(jweighPoints(3, 1), jweighPoints(3, 2), jweighPoints(3, 3));
 
 weighPoints=[90.36, 0, -11.6008;
              146, 0, 225.36;

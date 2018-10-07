@@ -42,6 +42,8 @@ if size(centrBlue)>0
 end
 if size(centrYellow)>0
     plot(centrYellow(:,1),centrYellow(:,2), 'y*');
+    xy = mn2xy(centrYellow(1,1), centrYellow(1,2));
+    disp(xy);
 end
 if size(centrGreen)>0
     plot(centrGreen(:,1),centrGreen(:,2), 'g*');

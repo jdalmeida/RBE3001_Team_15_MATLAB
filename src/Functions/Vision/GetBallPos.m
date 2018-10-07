@@ -24,16 +24,18 @@ for i=1:numel(fields)
     [rows, ~] = size(myColor);
     zPos = zeros(rows, 1, 'single');
     x = myColor(:, 1) * 2.34 - 236;
-    y = myColor(:, 2) * 1.37 +2.12;
+    y = myColor(:, 2) * 1.37 + 5;
     z = 0;
     
+    ballInfo(i, :) = [x, y, z, ballcolor, HEAVY];
+    
     if abs(y) >= YBOUND || x >= XBOUND
+        disp('color too big');
+        disp(ballcolor);
+        
         ballcolor = EMPTY;
         ballInfo(i, :) = [0,0,0, ballcolor, HEAVY];
     end
-    
-    %     set(scatterHandles(i).handle, 'xdata', x, 'ydata', y,'zdata', z);
-    ballInfo(i, :) = [x, y, z, ballcolor, HEAVY];
 end
 
 end
