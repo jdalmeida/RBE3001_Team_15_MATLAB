@@ -19,11 +19,11 @@ tot_height_in_cm = (2.5*8);
 % end
 
 % hardcoded pixel values
-pixels = [113, 153;
-          479, 157;
-          294, 268;
-          45, 427;
-          538, 434];
+pixels = [110, 142;
+          479, 145;
+          293, 256;
+          45, 414;
+          535, 421];
 
 %% organizing data by row.  2nd col *should* be consistent
 arm_pixels = pixels(1:2,:);

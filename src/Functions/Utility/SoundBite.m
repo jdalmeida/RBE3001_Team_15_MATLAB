@@ -10,6 +10,8 @@ switch name
         [y,Fs] = audioread('Squirtle.wav');
     case 'Bulbasaur'
         [y,Fs] = audioread('Bulbasaur.wav');
+    case 'Pikachu'
+        [y,Fs] = audioread('itsPikachu.wav');
     case 'Choose'
         [y,Fs] = audioread('poke-who.wav');
     otherwise

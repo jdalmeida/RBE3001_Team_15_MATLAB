@@ -23,9 +23,9 @@ for i=1:numel(fields)
     
     [rows, ~] = size(myColor);
     zPos = zeros(rows, 1, 'single');
-    x = myColor(:, 1) * .941 + 199;
-%     y = myColor(:, 2) * .822 + .671;
-    y = myColor(:, 2) * .782 + 2;
+    % for no pokemon
+    x = myColor(:, 1) * .908 + 193;
+    y = myColor(:, 2) * .815 + .823 + 18;
     z = 0;
     
     ballInfo(i, :) = [x, y, z, ballcolor, HEAVY];

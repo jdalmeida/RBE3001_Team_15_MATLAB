@@ -68,12 +68,12 @@ weighCounter=1;
 
 %% Choose Initializations
 alg = 'trajectory';     % which alg to use to move
-usingPokemon = true;        % using pokemon figures
+usingPokemon = false;        % using pokemon figures
 
-if usingPokemon
+if ~usingPokemon
     GripperClosed = [.1, .1, .1];
 else
-    GripperClosed = [.5, .3, .1];
+    GripperClosed = [.5, .1, .3];
 end
 
 % timer
@@ -182,7 +182,7 @@ while 1
                 total = [0, 0, 0];
                 graph = false;
                 state = States.SortByWeight;
-                disp('Next State" Sorting by Weight');
+                disp('Next State: Sorting by Weight');
             end
             
         case 'SortByWeight'
@@ -205,7 +205,7 @@ while 1
                 disp(strcat('    Weight: ', num2str(tipForce(3))));
                 
                 curPos = weighPoints(3,:);
-                setPos = [Pokeballs(colorBall + weightBall, 1), Pokeballs(colorBall + weightBall, 2), Pokeballs(colorBall + weightBall, 3) + 20];
+                setPos = [Pokeballs(colorBall + weightBall, 1), Pokeballs(colorBall + weightBall, 2), Pokeballs(colorBall + weightBall, 3) + 40];
                 toffset = Findtoffset(curPos, setPos, setVel);
                 graph = true;
                 
