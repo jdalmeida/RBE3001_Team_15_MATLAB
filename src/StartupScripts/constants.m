@@ -55,6 +55,8 @@ Pokeballs = [36, 220, 22;
     120, -200, 23;
     210, -210, 23];
 
+Pokemon = ["Squirtle", "Bulbasaur", "Pikachu"];
+
 jWorkPos = [0, 40, -25];
 tWorkPos = [177.8707, 0, 83.9759];
 

@@ -20,10 +20,10 @@ tot_height_in_cm = (2.5*8);
 
 % hardcoded pixel values
 pixels = [113, 153;
-          480, 159;
-          295, 270;
-          47, 432;
-          538, 438];
+          479, 157;
+          294, 268;
+          45, 427;
+          538, 434];
 
 %% organizing data by row.  2nd col *should* be consistent
 arm_pixels = pixels(1:2,:);

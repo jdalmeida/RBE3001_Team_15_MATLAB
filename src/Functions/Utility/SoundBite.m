@@ -1,17 +1,24 @@
 function SoundBite(name)
 %SOUNDBITE plays sound
 
+disp(strcat('Playing Sound: ', name));
+
+play = true;
+
 switch name
-    case 'Bulbasaur'
-        [y,Fs] = audioread('Bulbasaur.wav');
     case 'Squirtle'
         [y,Fs] = audioread('Squirtle.wav');
-    case 'I Choose You'
+    case 'Bulbasaur'
+        [y,Fs] = audioread('Bulbasaur.wav');
+    case 'Choose'
         [y,Fs] = audioread('poke-who.wav');
-    
+    otherwise
+        play = false;
 end
 
-sound(y, Fs);
+if play
+    sound(y, Fs);
+end
 
 end
 

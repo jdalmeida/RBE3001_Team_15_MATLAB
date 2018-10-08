@@ -79,7 +79,7 @@ end
 % timer
 disp('Beginning Loop');
 tic;
-startTime = toc + .421; % add offset for first run through
+startTime = toc; % add offset for first run through
 %% Beginning of Loop
 while 1
     % Continuously poll camera for ball information
@@ -118,7 +118,7 @@ while 1
     %% State Machine
     switch state
         case 'Start'
-            Move(pp, alg, tWorkPos, [0,0,0], startTime, toffset);
+            Move(pp, alg, tWorkPos, curPos, startTime, toffset);
             now = toc;
             if now > startTime + toffset
                 disp('Next state: Move Above Ball');
@@ -158,6 +158,7 @@ while 1
             now = toc;
             if now > startTime + .5
                 disp('Next state: Move To Weigh');
+                SoundBite(Pokemon(colorBall));
                 grabbed = true;
                 state = States.MoveToWeigh;
                 toffset = 1.5;
@@ -194,18 +195,17 @@ while 1
                 force = total / counts;
                 actualTorque = RawToTorque(force);
                 tipForce = statics3001([0,90,0], actualTorque) * 1000;
+                tipForce(3) = tipForce(3) - 127;
                 if tipForce(3) > 60
                     weightBall = HEAVY;
                 else
                     weightBall = LIGHT;
                 end
                 
-                disp('Weight');
-                disp(weightBall);
-                disp(tipForce(3));
+                disp(strcat('    Weight: ', num2str(tipForce(3))));
                 
                 curPos = weighPoints(3,:);
-                setPos = [Pokeballs(colorBall + weightBall, 1), Pokeballs(colorBall + weightBall, 2), Pokeballs(colorBall + weightBall, 3) + 40];
+                setPos = [Pokeballs(colorBall + weightBall, 1), Pokeballs(colorBall + weightBall, 2), Pokeballs(colorBall + weightBall, 3) + 20];
                 toffset = Findtoffset(curPos, setPos, setVel);
                 graph = true;
                 

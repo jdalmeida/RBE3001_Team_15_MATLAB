@@ -24,7 +24,8 @@ for i=1:numel(fields)
     [rows, ~] = size(myColor);
     zPos = zeros(rows, 1, 'single');
     x = myColor(:, 1) * .941 + 199;
-    y = myColor(:, 2) * .822 + 1.26;
+%     y = myColor(:, 2) * .822 + .671;
+    y = myColor(:, 2) * .782 + 2;
     z = 0;
     
     ballInfo(i, :) = [x, y, z, ballcolor, HEAVY];
