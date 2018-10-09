@@ -1,4 +1,4 @@
-function [ballInfo] = GetBallPos(cam)
+function [ballInfo] = GetBallPos(usingPokemon, cam)
 %GETBALLPOS Summary of this function goes here
 %   Detailed explanation goes here
 constants;
@@ -20,13 +20,18 @@ for i=1:numel(fields)
         ballInfo(i, :) = [0,0,0, ballcolor, HEAVY];
         continue;
     end
-    
-    [rows, ~] = size(myColor);
-    zPos = zeros(rows, 1, 'single');
+        
     % for no pokemon
-    x = myColor(:, 1) * .908 + 193;
+    if usingPokemon
+        x = myColor(:, 1) * .908 + 193 + 17;
+        if i == 3
+            x = x - 20;
+        end
+    else
+        x = myColor(:, 1) * .908 + 193;
+    end
     y = myColor(:, 2) * .815 + .823 + 18;
-    z = 0;
+    z = -20;
     
     ballInfo(i, :) = [x, y, z, ballcolor, HEAVY];
     

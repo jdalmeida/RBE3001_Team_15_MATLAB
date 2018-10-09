@@ -39,8 +39,8 @@ COLORS = [1, 2, 3];
 LIGHT = 0;
 HEAVY = 3;
 
-YBOUND = 160;
-XBOUND = 300;
+YBOUND = 200;
+XBOUND = 320;
 
 %Drop Off 
 % light blue, green, yellow
@@ -60,7 +60,7 @@ Pokemon = ["Squirtle", "Bulbasaur", "Pikachu"];
 jWorkPos = [0, 40, -25];
 tWorkPos = [177.8707, 0, 83.9759];
 
-jweighPoints = [0, 10, -30;
+jweighPoints = [0, 30, -30;
                 0, 90, -30;
                 0, 90, 0];
 

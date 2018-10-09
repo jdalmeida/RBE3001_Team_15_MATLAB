@@ -73,12 +73,13 @@ weighCounter=1;
 
 %% Choose Initializations
 alg = 'trajectory';     % which alg to use to move
-usingPokemon = false;        % using pokemon figures
+
+usingPokemon = true;        % using pokemon figures
 
 if ~usingPokemon
     GripperClosed = [.1, .1, .1];
 else
-    GripperClosed = [.3, .1, .1];
+    GripperClosed = [.7, .1, .1];
 end
 
 % timer
@@ -91,7 +92,7 @@ while 1
     if camOn
         ball = 1;
         
-        ballInfo = GetBallPos(cam);
+        ballInfo = GetBallPos(usingPokemon, cam);
         
         
         currBall = ballInfo(ball, :);

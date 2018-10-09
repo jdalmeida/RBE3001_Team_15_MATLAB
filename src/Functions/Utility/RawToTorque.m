@@ -3,7 +3,7 @@ function [torq] = RawToTorque(raw)
 
 % Given values
 offset = [2.285, 1.64, 2.33] * 1000;
-scale = [178.5, 178.5, -0.9];
+scale = [178.5, 1, -0.9];
 
 t = (raw - offset) ./ scale;
 
