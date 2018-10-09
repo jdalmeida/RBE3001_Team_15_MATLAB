@@ -1,7 +1,9 @@
-function SoundBite(name)
+function SoundBite(themePlayer, name)
 %SOUNDBITE plays sound
 
-disp(strcat('Playing Sound: ', name));
+pause(themePlayer);
+
+disp(strcat('Playing Sound:  ', name));
 
 play = true;
 

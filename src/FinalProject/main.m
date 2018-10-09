@@ -1,7 +1,12 @@
 %% General Code Inits
+clear sound;
 init;
 pp = PacketProcessor(myHIDSimplePacketComs);
 LivePlot3D([0,0,0], true, false, [0,0,0]);
+
+[y,Fs] = audioread('theme.wav');
+themePlayer = audioplayer(y, Fs);
+play(themePlayer);
 
 PID1=[.0025 0 0];
 PID2=[.0025 0 .028];
@@ -73,7 +78,7 @@ usingPokemon = false;        % using pokemon figures
 if ~usingPokemon
     GripperClosed = [.1, .1, .1];
 else
-    GripperClosed = [.5, .1, .3];
+    GripperClosed = [.3, .1, .1];
 end
 
 % timer
@@ -158,7 +163,7 @@ while 1
             now = toc;
             if now > startTime + .5
                 disp('Next state: Move To Weigh');
-                SoundBite(Pokemon(colorBall));
+                SoundBite(themePlayer, Pokemon(colorBall));
                 grabbed = true;
                 state = States.MoveToWeigh;
                 toffset = 1.5;
@@ -227,6 +232,7 @@ while 1
             now = toc;
             if now > startTime + .5
                 disp('Next state: Start');
+                resume(themePlayer);
                 grabbed = false;
                 state = States.Start;
                 curPos = setPos;
