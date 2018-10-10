@@ -11,10 +11,7 @@ try
     packet(7) = ANGLE_TO_TIC * joint3;
     
     statusPacket = pp.command(PID_ID, packet);
-%     
-%     pp.write(PID_ID, packet);
-%     pause(0.003);
-%     statusPacket = pp.read(PID_ID);
+    
     
     angles = statusPacket([1,4,7]);
 catch exception
