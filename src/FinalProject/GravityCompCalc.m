@@ -24,8 +24,8 @@ torquej3 = (l3 * cosd(q3 - 90 + q2)) * (mass2 + curMass) * g;
 
 maxTorques=[1.8641, .6636];
 % want to map from 0->1.8 and 0->.6636 to 0->.1
-j1in/maxTorques(1)/10
-j2in/maxTorques(2)/10
+j2out = j2in/maxTorques(1)/10
+j3out = j3in/maxTorques(2)/10
 % mapped2 = mapTorque(torquej2);
 % 
 % mapped3 = mapTorque(torquej3);

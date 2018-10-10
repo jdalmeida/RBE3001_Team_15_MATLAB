@@ -58,6 +58,8 @@ done=false; % if there are any balls avaliable
 graph = true; % update the graph
 camOn = true; % poll the camera
 grabbed = false; % if a ball is grabbed
+global weightOnTip
+weightOnTip = 0;
 
 setVel = 20;
 currentNumberOfBalls = 3;
@@ -74,7 +76,7 @@ weighCounter=1;
 %% Choose Initializations
 alg = 'trajectory';     % which alg to use to move
 
-usingPokemon = true;        % using pokemon figures
+usingPokemon = false;        % using pokemon figures
 
 % adjust gripped values for if using pokemon 
 % squirtle, bulbasaur, pikachu
@@ -205,6 +207,7 @@ while 1
                 tipForce(3) = tipForce(3) - 127;
                 if tipForce(3) > 60
                     weightBall = HEAVY;
+                    weightOnTip = .25;
                 else
                     weightBall = LIGHT;
                 end
@@ -241,6 +244,7 @@ while 1
                 setPos = tWorkPos;
                 toffset = Findtoffset(curPos, setPos, setVel);
                 startTime = toc;
+                weightOnTip = 0;
                 camOn = true;
             end
             

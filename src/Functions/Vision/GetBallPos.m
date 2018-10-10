@@ -23,19 +23,22 @@ for i=1:numel(fields)
         
     % for no pokemon
     % linear fit to fix scale of mn2xy
-    z=0;
+    z=-20;
     if usingPokemon
         x = myColor(:, 1) * .908 + 193 + 17;
+        z = -20; % height for pokemon
+        
         if i == 3
-            x = x - 20;
+            x = x - 20; % x adjust to grab pikachu tail
         elseif i==2
-            z=-40;
-            x=x-25;
+            z=-40;      % z adjust for bulbasaur height
+            x = x -25;  % x to grab its bulb
         end
+        
     else
-        z = -20;
         x = myColor(:, 1) * .908 + 193;
     end
+    
     y = myColor(:, 2) * .815 + .823 + 18;
 
     
