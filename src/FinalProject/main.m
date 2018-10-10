@@ -4,10 +4,12 @@ init;
 pp = PacketProcessor(myHIDSimplePacketComs);
 LivePlot3D([0,0,0], true, false, [0,0,0]);
 
+% Audio player init
 [y,Fs] = audioread('theme.wav');
 themePlayer = audioplayer(y, Fs);
 play(themePlayer);
 
+% Pid config
 PID1=[.0025 0 0];
 PID2=[.0025 0 .028];
 PID3=[.002 0 .02];
@@ -69,17 +71,17 @@ toffset = Findtoffset(curPos, setPos, setVel);
 %weighing setup
 weighCounter=1;
 
-%% Initialize Sounds
-
 %% Choose Initializations
 alg = 'trajectory';     % which alg to use to move
 
 usingPokemon = true;        % using pokemon figures
 
+% adjust gripped values for if using pokemon 
+% squirtle, bulbasaur, pikachu
 if ~usingPokemon
     GripperClosed = [.1, .1, .1];
 else
-    GripperClosed = [.5, .1, .1];
+    GripperClosed = [.5, .75, .1];
 end
 
 % timer
@@ -93,8 +95,7 @@ while 1
         ball = 1;
         
         ballInfo = GetBallPos(usingPokemon, cam);
-        
-        
+                
         currBall = ballInfo(ball, :);
         
         % if current color does not exist, iterate to the next color

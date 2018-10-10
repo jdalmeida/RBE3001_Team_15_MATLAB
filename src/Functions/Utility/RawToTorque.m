@@ -7,6 +7,6 @@ scale = [178.5, 1, -0.9];
 
 t = (raw - offset) ./ scale;
 
-torq = [0, t(2), t(3)];
+torq = [0, 0, t(3)];
 end
 
