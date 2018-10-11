@@ -5,3 +5,4 @@ src/*~
 *.jpg
 *.mp3
 *.m~
+SoundBites/*.wav
