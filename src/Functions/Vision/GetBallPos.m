@@ -8,6 +8,9 @@ fields = fieldnames(centroids);
 
 ballInfo = zeros(3, 5, 'double');
 
+camheight = 125;
+ballheight = 41;
+
 % Loop to iterate through each centroids point to generate the graph
 for i=1:numel(fields)
     myColor=centroids.(fields{i})*10;
@@ -20,10 +23,12 @@ for i=1:numel(fields)
         ballInfo(i, :) = [0,0,0, ballcolor, HEAVY];
         continue;
     end
-        
+    
     % for no pokemon
     % linear fit to fix scale of mn2xy
     z=-20;
+    x = 0;
+    y = 0;
     if usingPokemon
         x = myColor(:, 1) * .908 + 193 + 17;
         z = -20; % height for pokemon
@@ -36,15 +41,28 @@ for i=1:numel(fields)
         end
         
     else
-        x = myColor(:, 1) * .908 + 193;
+        y = myColor(:, 2) * .815 + .823 + 18;
+        
+        if y > 0
+            x = myColor(:, 1) * .908 + 193 - 15;
+            y = y - 10;
+        else
+            x = myColor(:, 1) * .908 + 193;
+        end
     end
     
-    y = myColor(:, 2) * .815 + .823 + 18;
-
+    
+%     d = sqrt(x^2 + y^2);
+%     a = d * ballheight / camheight;
+%     phi = atan2(x,y);
+%     Cx = (d - a)*sin(phi);
+%     Cy = (d- a)*cos(phi);
+%     
+    
     
     ballInfo(i, :) = [x, y, z, ballcolor, HEAVY];
     
-    if abs(y) >= YBOUND || x >= XBOUND        
+    if abs(y) >= YBOUND || x >= XBOUND
         ballcolor = EMPTY;
         ballInfo(i, :) = [0,0,0, ballcolor, HEAVY];
     end

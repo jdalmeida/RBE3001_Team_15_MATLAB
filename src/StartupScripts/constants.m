@@ -39,7 +39,7 @@ COLORS = [1, 2, 3];
 LIGHT = 0;
 HEAVY = 3;
 
-YBOUND = 200;
+YBOUND = 170;
 XBOUND = 320;
 
 %Drop Off 

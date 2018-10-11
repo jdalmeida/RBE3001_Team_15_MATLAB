@@ -19,8 +19,8 @@ tot_height_in_cm = (2.5*8);
 % end
 
 % hardcoded pixel values
-pixels = [110, 142;
-          479, 145;
+pixels = [109.3235, 142.5588;
+          476.9706, 145.5;
           293, 256;
           45, 414;
           535, 421];

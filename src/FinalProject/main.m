@@ -5,7 +5,7 @@ pp = PacketProcessor(myHIDSimplePacketComs);
 LivePlot3D([0,0,0], true, false, [0,0,0]);
 
 % Audio player init
-[y,Fs] = audioread('theme.wav');
+[y,Fs] = audioread('battleMusic.wav');
 themePlayer = audioplayer(y, Fs);
 play(themePlayer);
 
@@ -218,7 +218,7 @@ while 1
                 setPos = [Pokeballs(colorBall + weightBall, 1), Pokeballs(colorBall + weightBall, 2), Pokeballs(colorBall + weightBall, 3) + 40];
                 toffset = Findtoffset(curPos, setPos, setVel);
                 graph = true;
-                
+                resume(themePlayer);
                 disp('Next State: Move To Pokeballs');
                 startTime = toc;
             end
@@ -237,7 +237,7 @@ while 1
             now = toc;
             if now > startTime + .5
                 disp('Next state: Start');
-                resume(themePlayer);
+                
                 grabbed = false;
                 state = States.Start;
                 curPos = setPos;
