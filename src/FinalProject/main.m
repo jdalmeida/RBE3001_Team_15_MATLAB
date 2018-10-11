@@ -83,7 +83,7 @@ usingPokemon = false;        % using pokemon figures
 if ~usingPokemon
     GripperClosed = [.1, .1, .1];
 else
-    GripperClosed = [.5, .75, .1];
+    GripperClosed = [.4, .75, .1];
 end
 
 % timer

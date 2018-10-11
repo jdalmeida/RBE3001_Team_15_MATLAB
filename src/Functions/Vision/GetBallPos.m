@@ -8,9 +8,6 @@ fields = fieldnames(centroids);
 
 ballInfo = zeros(3, 5, 'double');
 
-camheight = 125;
-ballheight = 41;
-
 % Loop to iterate through each centroids point to generate the graph
 for i=1:numel(fields)
     myColor=centroids.(fields{i})*10;
@@ -31,13 +28,20 @@ for i=1:numel(fields)
     y = 0;
     if usingPokemon
         x = myColor(:, 1) * .908 + 193 + 17;
-        z = -20; % height for pokemon
+        y = myColor(:, 2) * .815 + .823 + 18;
+        z = -40; % height for pokemon
         
         if i == 3
             x = x - 20; % x adjust to grab pikachu tail
+            
         elseif i==2
             z=-40;      % z adjust for bulbasaur height
             x = x -25;  % x to grab its bulb
+            y = y-10;
+            
+        elseif i == 1
+            x =  myColor(:, 1) * .905 + 188;
+            
         end
         
     else
@@ -50,14 +54,6 @@ for i=1:numel(fields)
             x = myColor(:, 1) * .908 + 193;
         end
     end
-    
-    
-%     d = sqrt(x^2 + y^2);
-%     a = d * ballheight / camheight;
-%     phi = atan2(x,y);
-%     Cx = (d - a)*sin(phi);
-%     Cy = (d- a)*cos(phi);
-%     
     
     
     ballInfo(i, :) = [x, y, z, ballcolor, HEAVY];
