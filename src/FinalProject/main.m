@@ -4,6 +4,10 @@ init;
 pp = PacketProcessor(myHIDSimplePacketComs);
 LivePlot3D([0,0,0], true, false, [0,0,0]);
 
+handleGetter=GraphSingleton();
+writer=CSVWriter();
+fileName=writer.BeginCsv('main');
+
 % Audio player init
 [y,Fs] = audioread('battleMusic.wav');
 themePlayer = audioplayer(y, Fs);
@@ -76,7 +80,7 @@ weighCounter=1;
 alg = 'trajectory';     % which alg to use to move between trajectory or ivel
 
 
-usingPokemon = true;        % using pokemon figures
+usingPokemon = false;        % using pokemon figures
 % adjust gripped values for if using pokemon 
 % squirtle, bulbasaur, pikachu
 if ~usingPokemon
@@ -292,6 +296,10 @@ while 1
             end
             
             set(scatterHandles(i).handle, 'xdata', x, 'ydata', y,'zdata', z);
+            
+            time = toc;
+            data= [time endPos];
+            writer.AppendCsv(fileName, data);
         end
         
     end
