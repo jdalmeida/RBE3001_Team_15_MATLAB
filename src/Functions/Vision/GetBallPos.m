@@ -32,12 +32,12 @@ for i=1:numel(fields)
         z = -40; % height for pokemon
         
         if i == 3
-            x = x - 40; % x adjust to grab pikachu tail
+            x = x - 30; % x adjust to grab pikachu tail
             
         elseif i==2
             z=-40;      % z adjust for bulbasaur height
             x = x -25;  % x to grab its bulb
-            y = y-10;
+            y = y- 20;
             
         elseif i == 1
             x =  myColor(:, 1) * .905 + 188;
