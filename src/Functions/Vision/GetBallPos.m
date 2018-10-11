@@ -32,7 +32,7 @@ for i=1:numel(fields)
         z = -40; % height for pokemon
         
         if i == 3
-            x = x - 20; % x adjust to grab pikachu tail
+            x = x - 40; % x adjust to grab pikachu tail
             
         elseif i==2
             z=-40;      % z adjust for bulbasaur height

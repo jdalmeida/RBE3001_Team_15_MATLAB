@@ -40,7 +40,7 @@ while 1
     
     force = total / count;
     
-    disp('Joint 2 Torque');
+    disp('Joint 3 Torque');
     disp(force);
     
     kx = force - offset;

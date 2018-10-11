@@ -76,7 +76,7 @@ weighCounter=1;
 %% Choose Initializations
 alg = 'trajectory';     % which alg to use to move
 
-usingPokemon = false;        % using pokemon figures
+usingPokemon = true;        % using pokemon figures
 
 % adjust gripped values for if using pokemon 
 % squirtle, bulbasaur, pikachu
@@ -204,7 +204,7 @@ while 1
                 force = total / counts;
                 actualTorque = RawToTorque(force);
                 tipForce = statics3001([0,90,0], actualTorque) * 1000;
-                tipForce(3) = tipForce(3) - 127;
+                tipForce(3) = tipForce(3) - 127 - 300;
                 if tipForce(3) > 60
                     weightBall = HEAVY;
                     weightOnTip = .25;
