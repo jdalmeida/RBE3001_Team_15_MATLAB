@@ -39,8 +39,8 @@ imshow(BW);
 hold on
 if size(centrBlue)>0
     plot(centrBlue(:,1),centrBlue(:,2), 'b*');
-%     xy = mn2xy(centrBlue(1,1), centrBlue(1,2));
-%     disp(xy);
+    xy = mn2xy(centrBlue(1,1), centrBlue(1,2));
+    disp(xy);
 end
 if size(centrYellow)>0
     plot(centrYellow(:,1),centrYellow(:,2), 'y*');
@@ -49,6 +49,8 @@ if size(centrYellow)>0
 end
 if size(centrGreen)>0
     plot(centrGreen(:,1),centrGreen(:,2), 'g*');
+    xy = mn2xy(centrGreen(1,1), centrGreen(1,2));
+    disp(xy);
 end
 hold off
 pause(.2);

@@ -4,6 +4,10 @@ init;
 pp = PacketProcessor(myHIDSimplePacketComs);
 LivePlot3D([0,0,0], true, false, [0,0,0]);
 
+handleGetter=GraphSingleton();
+writer=CSVWriter();
+fileName=writer.BeginCsv('main');
+
 % Audio player init
 [y,Fs] = audioread('battleMusic.wav');
 themePlayer = audioplayer(y, Fs);
@@ -35,13 +39,12 @@ forceVector.handle = quiver3(0,0,0,0.0,0.0,0.0, ...
     'AutoScaleFactor', 1,...
     'MaxHeadSize', .5);
 
-% Change which algorithm to use for movement
-% 'trajectory' 'ivel'
+
 disp('Initializing Positions');
 Setpoint(pp, 0, 0, 0);
 Gripper(pp, 1);
 
-%% Init Camera
+% Init Camera
 cam = webcam();
 
 %% Initial Declarations
@@ -74,16 +77,16 @@ toffset = Findtoffset(curPos, setPos, setVel);
 weighCounter=1;
 
 %% Choose Initializations
-alg = 'trajectory';     % which alg to use to move
+alg = 'trajectory';     % which alg to use to move between trajectory or ivel
+
 
 usingPokemon = false;        % using pokemon figures
-
 % adjust gripped values for if using pokemon 
 % squirtle, bulbasaur, pikachu
 if ~usingPokemon
     GripperClosed = [.1, .1, .1];
 else
-    GripperClosed = [.5, .75, .1];
+    GripperClosed = [.4, .75, .1];
 end
 
 % timer
@@ -127,12 +130,17 @@ while 1
     %% State Machine
     switch state
         case 'Start'
+            % Move to the start position 
             Move(pp, alg, tWorkPos, curPos, startTime, toffset);
             now = toc;
             if now > startTime + toffset
+                %inits for the beginning of the next state 
+                %(setting current position and next set position
                 disp('Next state: Move Above Ball');
                 curPos = tWorkPos;
                 setPos = [xBall, yBall, tWorkPos(3)];
+                % calculates the time needed to travel between setpoints
+                % given a set velocity 
                 toffset = Findtoffset(curPos, setPos, setVel);
                 state = States.MoveAboveBall;
                 startTime = toc;
@@ -204,7 +212,7 @@ while 1
                 force = total / counts;
                 actualTorque = RawToTorque(force);
                 tipForce = statics3001([0,90,0], actualTorque) * 1000;
-                tipForce(3) = tipForce(3) - 127;
+                tipForce(3) = tipForce(3) - 127 - 300;
                 if tipForce(3) > 60
                     weightBall = HEAVY;
                     weightOnTip = .25;
@@ -288,6 +296,10 @@ while 1
             end
             
             set(scatterHandles(i).handle, 'xdata', x, 'ydata', y,'zdata', z);
+            
+            time = toc;
+            data= [time endPos];
+            writer.AppendCsv(fileName, data);
         end
         
     end
